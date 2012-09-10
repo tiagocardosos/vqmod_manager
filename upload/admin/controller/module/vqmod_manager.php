@@ -167,6 +167,27 @@ class ControllerModuleVQModManager extends Controller {
 			$this->data['log'] = '';
 		}
 
+		// VQMod class variables
+		$vqmod_vars = get_class_vars('VQMod');
+
+		$this->data['vqmod_vars'] = array();
+
+		if ($vqmod_vars) {
+			foreach ($vqmod_vars as $setting => $value) {
+				if ($setting == 'useCache') {
+					$this->data['vqmod_vars']['useCache'] = ($value == true ? $this->language->get('text_enabled') : $this->language->get('text_disabled'));
+				}
+
+				if ($setting == 'logging') {
+					$this->data['vqmod_vars']['Error Logging'] = ($value == true ? $this->language->get('text_enabled') : $this->language->get('text_disabled'));
+				}
+
+				if ($setting == 'cacheTime') {
+					$this->data['vqmod_vars']['cacheTime'] = sprintf($this->language->get('text_cachetime'), $value);
+				}
+			}
+		}
+
 		// Template
 		$this->template = 'module/vqmod_manager.tpl';
 		$this->children = array(
@@ -444,7 +465,7 @@ class ControllerModuleVQModManager extends Controller {
 			return false;
 		}
 
-		// If OpenCart 1.5.4+ check that vqmod_opencart.xml 2.1.7 or later is used
+		// If OpenCart 1.5.4+ check that vqmod_opencart.xml 2.1.7 or later is being used
 		if (version_compare(VERSION, '1.5.4', '>=')) {
 			libxml_use_internal_errors(true);
 			$xml = simplexml_load_file($vqmod_script_dir . 'vqmod_opencart.xml');

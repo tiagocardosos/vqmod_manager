@@ -21,17 +21,22 @@ $_['column_version']       = 'Version';
 $_['column_vqmver']        = 'VQMod Version';
 
 // Entry
+$_['entry_author']         = 'Author:';
 $_['entry_backup']         = 'Backup VQMod Scripts:';
 $_['entry_ext_version']    = 'VQMod Manager Version:';
+$_['entry_forum']          = 'Forum Support Thread:';
+$_['entry_license']        = 'License:';
 $_['entry_status']         = 'VQMod Manager Status:';
 $_['entry_upload']         = 'VQMod Upload:';
-$_['entry_vqmod_path']     = 'VQMod Path:';
-$_['entry_vqcache']        = 'VQMod Cache:';
 $_['entry_use_cache']      = 'Output Caching:';
+$_['entry_vqcache']        = 'VQMod Cache:';
+$_['entry_vqmod_path']     = 'VQMod Path:';
+$_['entry_website']        = 'Website:';
 
 // Text
 $_['text_autodetect']      = 'VQMod appears to be installed at the following path. Press Save to confirm path and complete installation.';
 $_['text_autodetect_fail'] = 'Unable to detect VQMod installation.  Please download and install the <a href="http://code.google.com/p/vqmod/downloads/list" target="_blank">latest version</a> or enter the non-standard server installation path.';
+$_['text_cachetime']       = '%s seconds';
 $_['text_delete']          = 'Delete';
 $_['text_disabled']        = 'Disabled';
 $_['text_enabled']         = 'Enabled';
@@ -90,6 +95,7 @@ $_['success_uninstall']          = 'Success: VQMod script uninstalled!';
 $_['success_upload']             = 'Success: VQMod script uploaded!';
 
 // Tabs
+$_['tab_about']                  = 'About';
 $_['tab_error_log']              = 'Error Log';
 $_['tab_settings']               = 'Settings and Maintenance';
 $_['tab_scripts']                = 'VQMod Scripts';
@@ -100,7 +106,7 @@ $_['warning_required_uninstall'] = 'WARNING: Uninstalling \\\'vqmod_opencart.xml
 $_['warning_vqmod_delete']       = 'WARNING: Deleting a VQMod script cannot be undone! Are you sure you want to do this?';
 
 // Version
-$_['vqmod_manager_author']       = 'OpenCartHelp.com';
+$_['vqmod_manager_author']       = 'rph';
 $_['vqmod_manager_license']      = '<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)</a>';
 $_['vqmod_manager_version']      = '2.0-alpha';
 ?>

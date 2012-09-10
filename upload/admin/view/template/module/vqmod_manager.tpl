@@ -18,7 +18,7 @@
   </div>
   <div class="content">
     <?php if ($vqmod_is_installed == true) { ?>
-    <div id="tabs" class="htabs"><a href="#tab-scripts"><?php echo $tab_scripts; ?></a><a href="#tab-settings"><?php echo $tab_settings; ?></a><a href="#tab-error"><?php echo $tab_error_log; ?></a></div>
+    <div id="tabs" class="htabs"><a href="#tab-scripts"><?php echo $tab_scripts; ?></a><a href="#tab-settings"><?php echo $tab_settings; ?></a><a href="#tab-error"><?php echo $tab_error_log; ?></a><a href="#tab-about"><?php echo $tab_about; ?></a></div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
     <div id="tab-scripts">
       <table class="list">
@@ -84,10 +84,14 @@
            <td><?php echo $entry_backup; ?></td>
            <td><a href="<?php echo $backup; ?>" class="button" style="margin-top:3px;"><span><?php echo $button_backup; ?></span></a></td>
          </tr>
+         <?php if ($vqmod_vars) { ?>
+         <?php foreach ($vqmod_vars as $setting => $value) { ?>
          <tr>
-           <td><?php echo $entry_ext_version; ?></td>
-           <td><?php echo $vqmod_manager_version; ?></td>
+           <td><?php echo $setting; ?>:</td>
+           <td><?php echo $value; ?></td>
          </tr>
+         <?php } ?>
+         <?php } ?>
       </table>
     </div>
     <div id="tab-error">
@@ -97,6 +101,30 @@
         </tr>
         <tr>
            <td style="border-top-color:#fff;"><div style="text-align:right;"><a href="<?php echo $clear_log; ?>" class="button"><span><?php echo $button_clear; ?></span></a></div></td>
+        </tr>
+      </table>
+    </div>
+    <div id="tab-about">
+      <table class="form">
+        <tr>
+          <td><?php echo $entry_ext_version; ?></td>
+          <td><?php echo $vqmod_manager_version; ?></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_author; ?></td>
+          <td><?php echo $vqmod_manager_author; ?></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_website; ?></td>
+          <td><a href="http://opencarthelp.com">http://opencarthelp.com</a></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_forum; ?></td>
+          <td><a href="http://forum.opencart.com/viewtopic.php?t=36235">http://forum.opencart.com/viewtopic.php?t=36235</a></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_license; ?></td>
+          <td><?php echo $vqmod_manager_license; ?></td>
         </tr>
       </table>
     </div>
