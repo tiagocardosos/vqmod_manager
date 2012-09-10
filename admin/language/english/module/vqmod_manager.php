@@ -67,6 +67,17 @@ $_['error_php_conflict']         = 'Warning: Unknown PHP conflict!';
 $_['error_unknown']              = 'Warning: Unknown error!';
 $_['error_write_fail']           = 'Warning: Failed to write VQMod script!';
 
+// VQMod Installation Errors
+$_['error_error_log_write']            = 'Unabled to write to VQMod error log! Please set "/vqmod" directory permissions to 755 or 777 and try again.';
+$_['error_opencart_xml']               = '"/vqmod/xml/vqmod_opencart.xml" does not appear to exist!  Please upload the OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_opencart_xml_version']       = 'You appear to be using a version of "vqmod_opencart.xml" that is out-of-date for your store!  Please upload the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_vqcache_dir']                = '"/vqmod/vqcache" directory does not appear to exist!';
+$_['error_vqcache_write']              = 'Unabled to write to "/vqmod/vqcache" directory!  Set permissions to 755 or 777 and try again.';
+$_['error_vqmod_dir']                  = '"/vqmod" directory does not appear to exist!';
+$_['error_vqmod_opencart_integration'] = 'VQMod has does not appear to have been integrated with OpenCart!';
+$_['error_vqmod_script_dir']           = '"/vqmod/xml" directory does not appear to exist!';
+$_['error_vqmod_script_write']         = 'Unable to write to "/vqmod/xml" directory!  Set permissions to 755 or 777 and try again.';
+
 // VQMod Log Errors
 $_['error_mod_aborted']          = 'Mod Aborted';
 $_['error_mod_skipped']          = 'Operation Skipped';
@@ -87,5 +98,5 @@ $_['warning_vqmod_delete']       = 'WARNING: Deleting a VQMod script cannot be u
 // Version
 $_['vqmod_manager_author']       = 'OpenCartHelp.com';
 $_['vqmod_manager_license']      = '<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)</a>';
-$_['vqmod_manager_version']      = '1.1';
+$_['vqmod_manager_version']      = '2.0-alpha';
 ?>
