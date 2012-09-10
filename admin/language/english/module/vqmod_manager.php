@@ -1,9 +1,14 @@
 <?php
+// Button
+$_['button_backup']        = 'Backup';
+$_['button_cancel']        = 'Cancel';
+$_['button_clear']         = 'Clear';
+$_['button_save']          = 'Save';
+$_['button_upload']        = 'Upload';
+$_['button_vqcache_dump']  = 'vqcache Dump';
+
 // Heading
-$_['heading_error_log']    = 'Error Log';
-$_['heading_settings']     = 'Settings and Maintenance';
 $_['heading_title']        = 'VQMod Manager';
-$_['heading_vqmods']       = 'VQMod Scripts';
 
 // Columns
 $_['column_action']        = 'Install / Uninstall';
@@ -36,15 +41,9 @@ $_['text_no_results']      = 'No VQMod scripts were found!';
 $_['text_success']         = 'Success: You have modified module VQMod Manager!';
 $_['text_unavailable']     = '&mdash;';
 $_['text_uninstall']       = 'Uninstall';
+$_['text_upload']          = 'Upload';
 $_['text_vqcache_help']    = 'Some system files will always be present even after clearing the cache.';
 $_['text_vqmod_path']      = 'VQMod directory path';
-
-// Button
-$_['button_backup']        = 'Backup';
-$_['button_cancel']        = 'Cancel';
-$_['button_clear']         = 'Clear';
-$_['button_save']          = 'Save';
-$_['button_upload']        = 'Upload';
 
 // Error
 $_['error_delete']         = 'Warning: Unable to delete VQMod script!';
@@ -89,6 +88,11 @@ $_['success_delete']             = 'Success: VQMod script deleted!';
 $_['success_install']            = 'Success: VQMod script installed!';
 $_['success_uninstall']          = 'Success: VQMod script uninstalled!';
 $_['success_upload']             = 'Success: VQMod script uploaded!';
+
+// Tabs
+$_['tab_error_log']              = 'Error Log';
+$_['tab_settings']               = 'Settings and Maintenance';
+$_['tab_scripts']                = 'VQMod Scripts';
 
 // Javascript Warnings
 $_['warning_required_delete']    = 'WARNING: Deleting \\\'vqmod_opencart.xml\\\' will cause VQMod to STOP WORKING! Continue?';

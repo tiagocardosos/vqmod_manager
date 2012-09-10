@@ -12,18 +12,15 @@
 <div class="success"><?php echo $success; ?></div>
 <?php } ?>
 <div class="box">
-  <div class="left"></div>
-  <div class="right"></div>
   <div class="heading">
     <h1><img src="view/image/module.png" alt="<?php echo $heading_title; ?>" /><?php echo $heading_title; ?></h1>
     <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
   </div>
   <div class="content">
+    <?php if ($vqmod_is_installed == true) { ?>
+    <div id="tabs" class="htabs"><a href="#tab-scripts"><?php echo $tab_scripts; ?></a><a href="#tab-settings"><?php echo $tab_settings; ?></a><a href="#tab-error"><?php echo $tab_error_log; ?></a></div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-    <?php if ($path_set == TRUE) { ?>
-    <!-- VQMods -->
-    <h4 style="font-size:15px; background-color:#EEEEEE; padding:9px 0px 9px 40px; border:solid 1px #B6B8D3; background-image:url('view/image/product.png'); background-repeat:no-repeat; background-position:1% 50%;"><?php echo $heading_vqmods; ?></h4>
-    <div>
+    <div id="tab-scripts">
       <table class="list">
         <thead>
           <tr>
@@ -37,9 +34,11 @@
           </tr>
         </thead>
         <tbody>
-          <?php if (isset($vqmods)) { ?>
+          <?php if ($vqmods) { ?>
+          <?php $class = 'odd'; ?>
           <?php foreach ($vqmods as $vqmod) { ?>
-          <tr>
+          <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+          <tr class="<?php echo $class; ?>">
             <td class="left"><strong><?php echo $vqmod['file_name']; ?></strong><br /><div style="font-size:0.9em; margin:3px 0px;"><?php echo $vqmod['id']; ?></div></td>
             <td class="center"><?php echo $vqmod['version']; ?></td>
             <td class="center"><?php echo $vqmod['vqmver']; ?></td>
@@ -59,35 +58,14 @@
           <?php } ?>
         </tbody>
       </table>
-      <!-- VQMOD Upload -->
       <table class="form">
         <tr>
-          <td><?php echo $entry_upload; ?>&nbsp;<input type="file" name="vqmod_file" /><input type="submit" name="upload" value="Upload" /></td>
+          <td><?php echo $entry_upload; ?>&nbsp;<input type="file" name="vqmod_file" /><input type="submit" name="upload" value="<?php echo $text_upload; ?>" /></td>
         </tr>
       </table>
-      <!-- /VQMOD Upload -->
     </div>
-    <!-- /VQMods -->
-    <?php } ?>
-
-    <!-- Settings -->
-    <h4 style="font-size:15px; background-color:#EEEEEE; padding:9px 0px 9px 40px; border:solid 1px #B6B8D3; background-image:url('view/image/setting.png'); background-repeat:no-repeat; background-position:1% 50%;"><?php echo $heading_settings; ?></h4>
-    <div>
+    <div id="tab-settings">
       <table class="form">
-         <tr>
-           <td>
-             <span class="required">*</span> <?php echo $entry_vqmod_path; ?>
-             <?php if ($path_set == FALSE) { ?>
-               <br /><span class="help" style="padding-top:3px;"><?php echo $text_autodetect; ?></span>
-             <?php } else { ?>
-               <br /><span class="help" style="padding-top:3px;"><?php echo $text_vqmod_path; ?></span>
-             <?php } ?>
-           </td>
-           <td>
-             <input type="text" name="vqmod_path" value="<?php echo $vqmod_path; ?>" size="56" />
-           </td>
-         </tr>
-         <?php if ($path_set == TRUE) { ?>
          <tr>
            <td><?php echo $entry_vqcache; ?><br /><span class="help" style="padding-top:3px;"><?php echo $text_vqcache_help; ?></span></td>
            <td style="border-top-color:#fff;">
@@ -99,25 +77,20 @@
              </select><br />
              <?php } ?>
              <a href="<?php echo $clear_vqcache; ?>" class="button" style="margin-top:3px;"><span><?php echo $button_clear; ?></span></a>
+             <a href="<?php echo $vqcache_dump; ?>" class="button" style="margin-top:3px;"><span><?php echo $button_vqcache_dump; ?></span></a>
            </td>
          </tr>
          <tr>
            <td><?php echo $entry_backup; ?></td>
            <td><a href="<?php echo $backup; ?>" class="button" style="margin-top:3px;"><span><?php echo $button_backup; ?></span></a></td>
          </tr>
-         <?php } ?>
          <tr>
            <td><?php echo $entry_ext_version; ?></td>
            <td><?php echo $vqmod_manager_version; ?></td>
          </tr>
       </table>
     </div>
-    <!-- /Settings -->
-
-    <!-- Error Log -->
-    <?php if ($path_set == TRUE) { ?>
-    <h4 style="font-size:15px; background-color:#EEEEEE; padding:9px 0px 9px 40px; border:solid 1px #B6B8D3; background-image:url('view/image/log.png'); background-repeat:no-repeat; background-position:1% 50%;"><?php echo $heading_error_log; ?></h4>
-    <div>
+    <div id="tab-error">
       <table class="form">
         <tr>
           <td style="border-bottom-color:#fff;"><textarea rows="20" cols="160" style="width: 99%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea></td>
@@ -127,11 +100,11 @@
         </tr>
       </table>
     </div>
-    <?php } ?>
-    <!-- /Error Log -->
     </form>
+  <?php } else { ?>
+  <!-- VQMod installation error -->
+  <?php } ?>
   </div>
-</div>
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -163,4 +136,7 @@ $(document).ready(function(){
 	});
 });
 </script>
+<script type="text/javascript"><!--
+$('#tabs a').tabs();
+//--></script>
 <?php echo $footer; ?>

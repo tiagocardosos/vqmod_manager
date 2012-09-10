@@ -1,0 +1,7 @@
+-Confirms VQMod is properly installed
+-New tab layout
+-Added ability to download vqcache files to assist troubleshooting
+-Fixed error output when a previously uploaded VQMod script has malformed XML
+-Spelling correction
+-Language localization for upload button
+-Updated licensing
