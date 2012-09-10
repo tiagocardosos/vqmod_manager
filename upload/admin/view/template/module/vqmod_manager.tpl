@@ -14,7 +14,7 @@
 <div class="box">
   <div class="heading">
     <h1><img src="view/image/module.png" alt="<?php echo $heading_title; ?>" /><?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+    <div class="buttons"><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
   </div>
   <div class="content">
     <?php if ($vqmod_is_installed == true) { ?>
@@ -35,9 +35,8 @@
         </thead>
         <tbody>
           <?php if ($vqmods) { ?>
-          <?php $class = 'odd'; ?>
+          <?php $class = 'vqmm-even'; ?>
           <?php foreach ($vqmods as $vqmod) { ?>
-          <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
           <tr class="<?php echo $class; ?>">
             <td class="left"><strong><?php echo $vqmod['file_name']; ?></strong><br /><div style="font-size:0.9em; margin:3px 0px;"><?php echo $vqmod['id']; ?></div></td>
             <td class="center"><?php echo $vqmod['version']; ?></td>
@@ -50,6 +49,7 @@
             <td class="center" style="white-space:nowrap;">
               [ <a href="<?php echo $vqmod['delete'] ?>"><?php echo $text_delete ?></a> ]</td>
           </tr>
+          <?php $class = ($class == 'vqmm-even' ? 'vqmm-odd' : 'vqmm-even'); ?>
           <?php } ?>
           <?php } else { ?>
           <tr>

@@ -33,6 +33,9 @@ $_['entry_vqcache']        = 'VQMod Cache:';
 $_['entry_vqmod_path']     = 'VQMod Path:';
 $_['entry_website']        = 'Website:';
 
+// Text Highlighting
+$_['highlight']            = '<span style="color: #ff0000">%s</span>';
+
 // Text
 $_['text_autodetect']      = 'VQMod appears to be installed at the following path. Press Save to confirm path and complete installation.';
 $_['text_autodetect_fail'] = 'Unable to detect VQMod installation.  Please download and install the <a href="http://code.google.com/p/vqmod/downloads/list" target="_blank">latest version</a> or enter the non-standard server installation path.';
