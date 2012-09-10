@@ -6,6 +6,7 @@ class ControllerModuleVQModManager extends Controller {
 		Error log red if issues
 		Invalid XML
 		Direct large error log download
+		Disable deleting of vqmod_opencart.xml
 	*/
 	private $error = array();
 
@@ -138,7 +139,11 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// VQCache files
-		$this->data['vqcache'] = array_diff(scandir($vqcache_dir), array('.', '..'));
+		$this->data['vqcache'] = array();
+
+		if (is_dir($vqcache_dir)) {
+			$this->data['vqcache'] = array_diff(scandir($vqcache_dir), array('.', '..'));
+		}
 
 		// VQMod Error Log
 		$log_file = $vqmod_dir . 'vqmod.log';
@@ -150,7 +155,7 @@ class ControllerModuleVQModManager extends Controller {
 				$this->data['log'] = sprintf($this->language->get('error_log_size'), (round((filesize($log_file) / 1048576), 2)));
 			// Regular log
 			} else {
-				$this->data['log'] = file_get_contents($log_file, FILE_USE_INCLUDE_PATH, NULL);
+				$this->data['log'] = file_get_contents($log_file, FILE_USE_INCLUDE_PATH, null);
 				$this->data['tab_error_log'] = sprintf($this->language->get('highlight'), $this->language->get('tab_error_log'));
 			}
 

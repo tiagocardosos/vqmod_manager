@@ -24,13 +24,13 @@
       <table class="list">
         <thead>
           <tr>
-            <td class="left"><?php echo $column_file_name; ?><hr style="color:#ddd; background-color:#ddd; height:1px; border:none; text-align:left; width:97%" /><i><?php echo $column_id; ?></i></td>
-            <td class="center"><?php echo $column_version; ?></td>
-            <td class="center"><?php echo $column_vqmver; ?></td>
-            <td class="center"><?php echo $column_author; ?></td>
-            <td class="center"><?php echo $column_status; ?></td>
-            <td class="center"><?php echo $column_action; ?></td>
-            <td class="center"><?php echo $column_delete; ?></td>
+            <th class="left"><?php echo $column_file_name; ?><hr style="color:#ddd; background-color:#ddd; height:1px; border:none; text-align:left; width:97%" /><i><?php echo $column_id; ?></i></th>
+            <th class="center"><?php echo $column_version; ?></th>
+            <th class="center"><?php echo $column_vqmver; ?></th>
+            <th class="center"><?php echo $column_author; ?></th>
+            <th class="center"><?php echo $column_status; ?></th>
+            <th class="center"><?php echo $column_action; ?></th>
+            <th class="center"><?php echo $column_delete; ?></th>
           </tr>
         </thead>
         <tbody>

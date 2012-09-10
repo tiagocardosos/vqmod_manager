@@ -36,23 +36,6 @@ $_['entry_website']        = 'Website:';
 // Text Highlighting
 $_['highlight']            = '<span style="color: #ff0000">%s</span>';
 
-// Text
-$_['text_autodetect']      = 'VQMod appears to be installed at the following path. Press Save to confirm path and complete installation.';
-$_['text_autodetect_fail'] = 'Unable to detect VQMod installation.  Please download and install the <a href="http://code.google.com/p/vqmod/downloads/list" target="_blank">latest version</a> or enter the non-standard server installation path.';
-$_['text_cachetime']       = '%s seconds';
-$_['text_delete']          = 'Delete';
-$_['text_disabled']        = 'Disabled';
-$_['text_enabled']         = 'Enabled';
-$_['text_install']         = 'Install';
-$_['text_module']          = 'Module';
-$_['text_no_results']      = 'No VQMod scripts were found!';
-$_['text_success']         = 'Success: You have modified module VQMod Manager!';
-$_['text_unavailable']     = '&mdash;';
-$_['text_uninstall']       = 'Uninstall';
-$_['text_upload']          = 'Upload';
-$_['text_vqcache_help']    = 'Some system files will always be present even after clearing the cache.';
-$_['text_vqmod_path']      = 'VQMod directory path';
-
 // Error
 $_['error_delete']         = 'Warning: Unable to delete VQMod script!';
 $_['error_filetype']       = 'Warning: Invalid filetype!  Please only upload .xml files.';
@@ -86,30 +69,47 @@ $_['error_vqmod_script_dir']           = '"/vqmod/xml" directory does not appear
 $_['error_vqmod_script_write']         = 'Unable to write to "/vqmod/xml" directory!  Set permissions to 755 or 777 and try again.';
 
 // VQMod Log Errors
-$_['error_mod_aborted']          = 'Mod Aborted';
-$_['error_mod_skipped']          = 'Operation Skipped';
+$_['error_mod_aborted']     = 'Mod Aborted';
+$_['error_mod_skipped']     = 'Operation Skipped';
 
 // Success
-$_['success_clear_vqcache']      = 'Success: VQMod cache cleared!';
-$_['success_clear_log']          = 'Success: VQMod error log cleared!';
-$_['success_delete']             = 'Success: VQMod script deleted!';
-$_['success_install']            = 'Success: VQMod script installed!';
-$_['success_uninstall']          = 'Success: VQMod script uninstalled!';
-$_['success_upload']             = 'Success: VQMod script uploaded!';
+$_['success_clear_vqcache'] = 'Success: VQMod cache cleared!';
+$_['success_clear_log']     = 'Success: VQMod error log cleared!';
+$_['success_delete']        = 'Success: VQMod script deleted!';
+$_['success_install']       = 'Success: VQMod script installed!';
+$_['success_uninstall']     = 'Success: VQMod script uninstalled!';
+$_['success_upload']        = 'Success: VQMod script uploaded!';
 
 // Tabs
-$_['tab_about']                  = 'About';
-$_['tab_error_log']              = 'Error Log';
-$_['tab_settings']               = 'Settings and Maintenance';
-$_['tab_scripts']                = 'VQMod Scripts';
+$_['tab_about']             = 'About';
+$_['tab_error_log']         = 'Error Log';
+$_['tab_settings']          = 'Settings and Maintenance';
+$_['tab_scripts']           = 'VQMod Scripts';
+
+// Text
+$_['text_autodetect']       = 'VQMod appears to be installed at the following path. Press Save to confirm path and complete installation.';
+$_['text_autodetect_fail']  = 'Unable to detect VQMod installation.  Please download and install the <a href="http://code.google.com/p/vqmod/downloads/list" target="_blank">latest version</a> or enter the non-standard server installation path.';
+$_['text_cachetime']        = '%s seconds';
+$_['text_delete']           = 'Delete';
+$_['text_disabled']         = 'Disabled';
+$_['text_enabled']          = 'Enabled';
+$_['text_install']          = 'Install';
+$_['text_module']           = 'Module';
+$_['text_no_results']       = 'No VQMod scripts were found!';
+$_['text_success']          = 'Success: You have modified module VQMod Manager!';
+$_['text_unavailable']      = '&mdash;';
+$_['text_uninstall']        = 'Uninstall';
+$_['text_upload']           = 'Upload';
+$_['text_use_cache_help']   = 'useCache is depricated as of VQMod 2.1.7'; // @TODO
+$_['text_vqcache_help']     = 'Some system files will always be present even after clearing the cache.';
+
+// Version
+$_['vqmod_manager_author']  = 'rph';
+$_['vqmod_manager_license'] = '<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)</a>';
+$_['vqmod_manager_version'] = '2.0-alpha';
 
 // Javascript Warnings
 $_['warning_required_delete']    = 'WARNING: Deleting \\\'vqmod_opencart.xml\\\' will cause VQMod to STOP WORKING! Continue?';
 $_['warning_required_uninstall'] = 'WARNING: Uninstalling \\\'vqmod_opencart.xml\\\' will cause VQMod to STOP WORKING! Continue?';
 $_['warning_vqmod_delete']       = 'WARNING: Deleting a VQMod script cannot be undone! Are you sure you want to do this?';
-
-// Version
-$_['vqmod_manager_author']       = 'rph';
-$_['vqmod_manager_license']      = '<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)</a>';
-$_['vqmod_manager_version']      = '2.0-alpha';
 ?>
