@@ -35,10 +35,9 @@
         </thead>
         <tbody>
           <?php if ($vqmods) { ?>
-          <?php $class = 'vqmm-even'; ?>
           <?php foreach ($vqmods as $vqmod) { ?>
-          <tr class="<?php echo $class; ?>">
-            <td class="left"><strong><?php echo $vqmod['file_name']; ?></strong><br /><div style="font-size:0.9em; margin:3px 0px;"><?php echo $vqmod['id']; ?></div></td>
+          <tr>
+            <td class="left"><strong><?php echo $vqmod['file_name']; ?></strong><br /><div style="font-size:0.9em; margin:3px 0px;"><?php echo $vqmod['id']; ?><br /><?php echo $vqmod['invalid_xml']; ?></div></td>
             <td class="center"><?php echo $vqmod['version']; ?></td>
             <td class="center"><?php echo $vqmod['vqmver']; ?></td>
             <td class="center"><?php echo $vqmod['author']; ?></td>
@@ -47,13 +46,12 @@
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
               <?php } ?></td>
             <td class="center" style="white-space:nowrap;">
-              [ <a href="<?php echo $vqmod['delete'] ?>"><?php echo $text_delete ?></a> ]</td>
+              [ <a href="<?php echo $vqmod['delete'] ?>"><?php echo $text_delete; ?></a> ]</td>
           </tr>
-          <?php $class = ($class == 'vqmm-even' ? 'vqmm-odd' : 'vqmm-even'); ?>
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
+            <td class="center" colspan="7"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -69,8 +67,8 @@
          <tr>
            <td><?php echo $entry_vqcache; ?><br /><span class="help" style="padding-top:3px;"><?php echo $text_vqcache_help; ?></span></td>
            <td style="border-top-color:#fff;">
-             <?php if (isset($vqcache)) { ?>
-             <select multiple="multiple" size="7" style="min-width:200px;">
+             <?php if ($vqcache) { ?>
+             <select multiple="multiple" size="7" style="min-width:250px;">
                <?php foreach ($vqcache as $vqcache_file) { ?>
                 <option><?php echo $vqcache_file; ?></option>
                <?php } ?>

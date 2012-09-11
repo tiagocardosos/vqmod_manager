@@ -28,7 +28,7 @@ $_['entry_forum']          = 'Forum Support Thread:';
 $_['entry_license']        = 'License:';
 $_['entry_status']         = 'VQMod Manager Status:';
 $_['entry_upload']         = 'VQMod Upload:';
-$_['entry_use_cache']      = 'Output Caching:';
+$_['entry_usecache']       = 'Output Caching:'; // DELETE?
 $_['entry_vqcache']        = 'VQMod Cache:';
 $_['entry_vqmod_path']     = 'VQMod Path:';
 $_['entry_website']        = 'Website:';
@@ -60,7 +60,7 @@ $_['error_write_fail']           = 'Warning: Failed to write VQMod script!';
 // VQMod Installation Errors
 $_['error_error_log_write']            = 'Unabled to write to VQMod error log! Please set "/vqmod" directory permissions to 755 or 777 and try again.';
 $_['error_opencart_xml']               = '"/vqmod/xml/vqmod_opencart.xml" does not appear to exist!  Please upload the OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
-$_['error_opencart_xml_version']       = 'You appear to be using a version of "vqmod_opencart.xml" that is out-of-date for your store!  Please upload the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_opencart_xml_version']       = 'You appear to be using a version of "vqmod_opencart.xml" that is out-of-date for your store!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqcache_dir']                = '"/vqmod/vqcache" directory does not appear to exist!';
 $_['error_vqcache_write']              = 'Unabled to write to "/vqmod/vqcache" directory!  Set permissions to 755 or 777 and try again.';
 $_['error_vqmod_dir']                  = '"/vqmod" directory does not appear to exist!';
@@ -100,7 +100,7 @@ $_['text_success']          = 'Success: You have modified module VQMod Manager!'
 $_['text_unavailable']      = '&mdash;';
 $_['text_uninstall']        = 'Uninstall';
 $_['text_upload']           = 'Upload';
-$_['text_use_cache_help']   = 'useCache is depricated as of VQMod 2.1.7'; // @TODO
+$_['text_usecache_help']    = 'useCache is depricated as of VQMod 2.1.7'; // @TODO
 $_['text_vqcache_help']     = 'Some system files will always be present even after clearing the cache.';
 
 // Version

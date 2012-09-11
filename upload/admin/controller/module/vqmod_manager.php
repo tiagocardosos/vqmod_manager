@@ -121,20 +121,23 @@ class ControllerModuleVQModManager extends Controller {
 				$xml = simplexml_load_file($vqmod_script);
 
 				if (libxml_get_errors()) {
+					$invalid_xml = sprintf($this->language->get('highlight'), $this->language->get('error_invalid_xml'));
 					libxml_clear_errors();
-					// Invalid XML
 				} else {
-					$this->data['vqmods'][$vqmod_script] = array(
-						'file_name'  => basename($vqmod_script, ''),
-						'id'         => isset($xml->id) ? $xml->id : $this->language->get('text_unavailable'),
-						'version'    => isset($xml->version) ? $xml->version : $this->language->get('text_unavailable'),
-						'vqmver'     => isset($xml->vqmver) ? $xml->vqmver : $this->language->get('text_unavailable'),
-						'author'     => isset($xml->author) ? $xml->author : $this->language->get('text_unavailable'),
-						'status'     => strpos($vqmod_script, '.xml_') ? sprintf($this->language->get('highlight'), $this->language->get('text_disabled')) : $this->language->get('text_enabled'),
-						'delete'     => $this->url->link('module/vqmod_manager/vqmod_delete', 'token=' . $this->session->data['token'] . '&vqmod=' . basename($vqmod_script), 'SSL'),
-						'action'     => $action
-					);
+					$invalid_xml = '';
 				}
+
+				$this->data['vqmods'][$vqmod_script] = array(
+					'file_name'   => basename($vqmod_script, ''),
+					'id'          => isset($xml->id) ? $xml->id : $this->language->get('text_unavailable'),
+					'version'     => isset($xml->version) ? $xml->version : $this->language->get('text_unavailable'),
+					'vqmver'      => isset($xml->vqmver) ? $xml->vqmver : $this->language->get('text_unavailable'),
+					'author'      => isset($xml->author) ? $xml->author : $this->language->get('text_unavailable'),
+					'status'      => strpos($vqmod_script, '.xml_') ? sprintf($this->language->get('highlight'), $this->language->get('text_disabled')) : $this->language->get('text_enabled'),
+					'delete'      => $this->url->link('module/vqmod_manager/vqmod_delete', 'token=' . $this->session->data['token'] . '&vqmod=' . basename($vqmod_script), 'SSL'),
+					'action'      => $action,
+					'invalid_xml' => $invalid_xml
+				);
 			}
 		}
 
