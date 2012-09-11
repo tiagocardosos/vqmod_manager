@@ -105,7 +105,7 @@ $_['text_vqcache_help']     = 'Some system files will always be present even aft
 
 // Version
 $_['vqmod_manager_author']  = 'rph';
-$_['vqmod_manager_license'] = '<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)</a>';
+$_['vqmod_manager_license'] = 'Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)';
 $_['vqmod_manager_version'] = '2.0-alpha';
 
 // Javascript Warnings

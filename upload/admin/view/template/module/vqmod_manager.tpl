@@ -114,15 +114,15 @@
         </tr>
         <tr>
           <td><?php echo $entry_website; ?></td>
-          <td><a href="http://opencarthelp.com">http://opencarthelp.com</a></td>
+          <td><a onclick="window.open('http://opencarthelp.com');" style="font-weight:bold; color:#0078f3; text-decoration:none;">http://opencarthelp.com</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_forum; ?></td>
-          <td><a href="http://forum.opencart.com/viewtopic.php?t=36235">http://forum.opencart.com/viewtopic.php?t=36235</a></td>
+          <td><a onclick="window.open('http://forum.opencart.com/viewtopic.php?t=36235');" style="font-weight:bold; color:#0078f3; text-decoration:none;">http://forum.opencart.com/viewtopic.php?t=36235</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_license; ?></td>
-          <td><?php echo $vqmod_manager_license; ?></td>
+          <td><a onclick="window.open('http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode');" style="font-weight:bold; color:#0078f3; text-decoration:none;"><?php echo $vqmod_manager_license; ?></a></td>
         </tr>
       </table>
     </div>
