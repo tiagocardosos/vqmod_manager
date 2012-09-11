@@ -547,7 +547,7 @@ class ControllerModuleVQModManager extends Controller {
 
 	private function validate() {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['vqmod_installation_error'] = $this->language->get('error_permission');
+			$this->session->data['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->error) {
