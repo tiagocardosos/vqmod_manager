@@ -34,7 +34,7 @@ $_['entry_vqmod_path']     = 'VQMod Path:';
 $_['entry_website']        = 'Website:';
 
 // Text Highlighting
-$_['highlight']            = '<span style="color: #ff0000">%s</span>';
+$_['highlight']            = '<span class="highlight">%s</span>';
 
 // Error
 $_['error_delete']         = 'Warning: Unable to delete VQMod script!';

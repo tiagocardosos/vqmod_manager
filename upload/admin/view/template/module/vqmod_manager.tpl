@@ -24,7 +24,7 @@
       <table class="list">
         <thead>
           <tr>
-            <td class="left"><?php echo $column_file_name; ?><hr style="color:#ddd; background-color:#ddd; height:1px; border:none; text-align:left; width:97%" /><i><?php echo $column_id; ?></i></td>
+            <td class="left"><?php echo $column_file_name; ?><hr /><i><?php echo $column_id; ?></i></td>
             <td class="center"><?php echo $column_version; ?></td>
             <td class="center"><?php echo $column_vqmver; ?></td>
             <td class="center"><?php echo $column_author; ?></td>
@@ -37,15 +37,15 @@
           <?php if ($vqmods) { ?>
           <?php foreach ($vqmods as $vqmod) { ?>
           <tr>
-            <td class="left"><strong><?php echo $vqmod['file_name']; ?></strong><br /><div style="font-size:0.9em; margin:3px 0px;"><?php echo $vqmod['id']; ?><br /><?php echo $vqmod['invalid_xml']; ?></div></td>
+            <td class="left"><strong><?php echo $vqmod['file_name']; ?></strong><br /><div class="description"><?php echo $vqmod['id']; ?><br /><?php echo $vqmod['invalid_xml']; ?></div></td>
             <td class="center"><?php echo $vqmod['version']; ?></td>
             <td class="center"><?php echo $vqmod['vqmver']; ?></td>
             <td class="center"><?php echo $vqmod['author']; ?></td>
             <td class="center"><?php echo $vqmod['status'] ?></td>
-            <td class="center" style="white-space:nowrap;"><?php foreach ($vqmod['action'] as $action) { ?>
+            <td class="action"><?php foreach ($vqmod['action'] as $action) { ?>
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
               <?php } ?></td>
-            <td class="center" style="white-space:nowrap;">
+            <td class="action">
               [ <a href="<?php echo $vqmod['delete'] ?>"><?php echo $text_delete; ?></a> ]</td>
           </tr>
           <?php } ?>
@@ -65,22 +65,22 @@
     <div id="tab-settings">
       <table class="form">
          <tr>
-           <td><?php echo $entry_vqcache; ?><br /><span class="help" style="padding-top:3px;"><?php echo $text_vqcache_help; ?></span></td>
-           <td style="border-top-color:#fff;">
+           <td><?php echo $entry_vqcache; ?><br /><span class="help"><?php echo $text_vqcache_help; ?></span></td>
+           <td>
              <?php if ($vqcache) { ?>
-             <select multiple="multiple" size="7" style="min-width:250px;">
+             <select multiple="multiple" size="7" id="vqcache">
                <?php foreach ($vqcache as $vqcache_file) { ?>
                 <option><?php echo $vqcache_file; ?></option>
                <?php } ?>
              </select><br />
              <?php } ?>
-             <a href="<?php echo $clear_vqcache; ?>" class="button" style="margin-top:3px;"><span><?php echo $button_clear; ?></span></a>
-             <a href="<?php echo $vqcache_dump; ?>" class="button" style="margin-top:3px;"><span><?php echo $button_vqcache_dump; ?></span></a>
+             <a href="<?php echo $clear_vqcache; ?>" class="button"><span><?php echo $button_clear; ?></span></a>
+             <a href="<?php echo $vqcache_dump; ?>" class="button"><span><?php echo $button_vqcache_dump; ?></span></a>
            </td>
          </tr>
          <tr>
            <td><?php echo $entry_backup; ?></td>
-           <td><a href="<?php echo $backup; ?>" class="button" style="margin-top:3px;"><span><?php echo $button_backup; ?></span></a></td>
+           <td><a href="<?php echo $backup; ?>" class="button"><span><?php echo $button_backup; ?></span></a></td>
          </tr>
          <?php if ($vqmod_vars) { ?>
          <?php foreach ($vqmod_vars as $setting => $value) { ?>
@@ -95,10 +95,8 @@
     <div id="tab-error">
       <table class="form">
         <tr>
-          <td style="border-bottom-color:#fff;"><textarea rows="20" cols="160" style="width: 99%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea></td>
-        </tr>
-        <tr>
-           <td style="border-top-color:#fff;"><div style="text-align:right;"><a href="<?php echo $clear_log; ?>" class="button"><span><?php echo $button_clear; ?></span></a></div></td>
+          <td><textarea rows="20" cols="160" id="error-log"><?php echo $log; ?></textarea>
+          <div style="text-align:right;"><a href="<?php echo $clear_log; ?>" class="button"><span><?php echo $button_clear; ?></span></a></div></td>
         </tr>
       </table>
     </div>
@@ -114,15 +112,15 @@
         </tr>
         <tr>
           <td><?php echo $entry_website; ?></td>
-          <td><a onclick="window.open('http://opencarthelp.com');" style="font-weight:bold; color:#0078f3; text-decoration:none;">http://opencarthelp.com</a></td>
+          <td><a onclick="window.open('http://opencarthelp.com');" class="about">http://opencarthelp.com</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_forum; ?></td>
-          <td><a onclick="window.open('http://forum.opencart.com/viewtopic.php?t=36235');" style="font-weight:bold; color:#0078f3; text-decoration:none;">http://forum.opencart.com/viewtopic.php?t=36235</a></td>
+          <td><a onclick="window.open('http://forum.opencart.com/viewtopic.php?t=36235');" class="about">http://forum.opencart.com/viewtopic.php?t=36235</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_license; ?></td>
-          <td><a onclick="window.open('http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode');" style="font-weight:bold; color:#0078f3; text-decoration:none;"><?php echo $vqmod_manager_license; ?></a></td>
+          <td><a onclick="window.open('http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode');" class="about"><?php echo $vqmod_manager_license; ?></a></td>
         </tr>
       </table>
     </div>

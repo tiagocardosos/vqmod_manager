@@ -1,0 +1,62 @@
+hr  {
+	color: #ddd;
+	background-color: #ddd;
+	height: 1px;
+	border: none;
+	text-align: left;
+	width: 97%
+}
+.about a:link {
+	font-weight: bold;
+	/*color: #0078f3;*/
+	color: red;
+	text-decoration: none;
+}
+.about a:visited {
+	font-weight: bold;
+	/*color: #0078f3;*/
+	color: red;
+	text-decoration: none;
+}
+.about a:hover {
+	font-weight: bold;
+	/*color: #0078f3;*/
+	color: red;
+	text-decoration: underline;
+}
+.about a:active {
+	font-weight: bold;
+	/*color: #0078f3;*/
+	color: red;
+	text-decoration: none;
+}
+#error-log {
+	width: 99%;
+	height: 300px;
+	padding: 5px;
+	border: 1px solid #CCCCCC;
+	background: #fff;
+	overflow: scroll;
+	margin-bottom: 10px;
+}
+#vqcache {
+	min-width: 250px;
+	margin-bottom: 10px;
+}
+.action {
+	text-align: center;
+	white-space: nowrap;
+}
+.description  {
+	font-size: 0.9em;
+	margin: 3px 0px;
+}
+.highlight  {
+	color: #ff0000;
+}
+.row-even td  {
+	background-color: #f4f4f8;
+}
+.row-odd td  {
+	background-color: #ffffff;
+}

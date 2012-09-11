@@ -199,6 +199,9 @@ class ControllerModuleVQModManager extends Controller {
 			}
 		}
 
+		// Stylesheet
+		$this->document->addStyle('view/stylesheet/vqmod_manager.css');
+
 		// Template
 		$this->template = 'module/vqmod_manager.tpl';
 		$this->children = array(
