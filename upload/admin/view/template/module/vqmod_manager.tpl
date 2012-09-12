@@ -45,10 +45,10 @@
             <td class="center"><?php echo $vqmod['author']; ?></td>
             <td class="center"><?php echo $vqmod['status'] ?></td>
             <td class="action"><?php foreach ($vqmod['action'] as $action) { ?>
-              [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+              [ <a class="action-link" href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
               <?php } ?></td>
             <td class="action">
-              [ <a href="<?php echo $vqmod['delete'] ?>"><?php echo $text_delete; ?></a> ]</td>
+              [ <a class="action-link" href="<?php echo $vqmod['delete'] ?>"><?php echo $text_delete; ?></a> ]</td>
           </tr>
           <?php } ?>
           <?php } else { ?>
@@ -114,15 +114,15 @@
         </tr>
         <tr>
           <td><?php echo $entry_website; ?></td>
-          <td><a onclick="window.open('http://opencarthelp.com');" class="about">http://opencarthelp.com</a></td>
+          <td><a class="about" onclick="window.open('http://opencarthelp.com');">http://opencarthelp.com</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_forum; ?></td>
-          <td><a onclick="window.open('http://forum.opencart.com/viewtopic.php?t=36235');" class="about">http://forum.opencart.com/viewtopic.php?t=36235</a></td>
+          <td><a class="about" onclick="window.open('http://forum.opencart.com/viewtopic.php?t=36235');">http://forum.opencart.com/viewtopic.php?t=36235</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_license; ?></td>
-          <td><a onclick="window.open('http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode');" class="about"><?php echo $vqmod_manager_license; ?></a></td>
+          <td><a class="about" onclick="window.open('http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode');"><?php echo $vqmod_manager_license; ?></a></td>
         </tr>
       </table>
     </div>

@@ -19,28 +19,17 @@ hr  {
 	min-width: 250px;
 	margin-bottom: 10px;
 }
-.about a:link {
-	font-weight: bold;
+a.about {
 	/*color: #0078f3;*/
-	color: red;
 	text-decoration: none;
+	/*font-weight: bold;*/
 }
-.about a:visited {
-	font-weight: bold;
+a.about:hover {
 	/*color: #0078f3;*/
-	color: red;
-	text-decoration: none;
-}
-.about a:hover {
-	font-weight: bold;
-	/*color: #0078f3;*/
-	color: red;
 	text-decoration: underline;
+	/*font-weight: bold;*/
 }
-.about a:active {
-	font-weight: bold;
-	/*color: #0078f3;*/
-	color: red;
+a.action-link:hover {
 	text-decoration: none;
 }
 .action {
@@ -69,9 +58,6 @@ hr  {
 	font-weight: bold;
 	border-right: 1px solid #dddddd;
 	border-bottom: 1px solid #dddddd;
-}
-.vqmm-list tbody td a {
-	text-decoration: underline;
 }
 .vqmm-list tbody td {
 	vertical-align: middle;
