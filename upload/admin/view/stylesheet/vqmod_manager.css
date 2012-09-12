@@ -6,6 +6,19 @@ hr  {
 	text-align: left;
 	width: 97%
 }
+#error-log {
+	width: 99%;
+	height: 300px;
+	padding: 5px;
+	border: 1px solid #CCCCCC;
+	background: #fff;
+	overflow: scroll;
+	margin-bottom: 10px;
+}
+#vqcache {
+	min-width: 250px;
+	margin-bottom: 10px;
+}
 .about a:link {
 	font-weight: bold;
 	/*color: #0078f3;*/
@@ -30,19 +43,6 @@ hr  {
 	color: red;
 	text-decoration: none;
 }
-#error-log {
-	width: 99%;
-	height: 300px;
-	padding: 5px;
-	border: 1px solid #CCCCCC;
-	background: #fff;
-	overflow: scroll;
-	margin-bottom: 10px;
-}
-#vqcache {
-	min-width: 250px;
-	margin-bottom: 10px;
-}
 .action {
 	text-align: center;
 	white-space: nowrap;
@@ -54,9 +54,44 @@ hr  {
 .highlight  {
 	color: #ff0000;
 }
-.row-even td  {
+.vqmm-list {
+	border-collapse: collapse;
+	width: 100%;
+	border-top: 1px solid #dddddd;
+	border-left: 1px solid #dddddd;
+	margin-bottom: 20px;
+}
+.vqmm-list thead th {
+	background-color: #efefef;
+	padding: 0px 5px;
+	text-decoration: none;
+	color: #222222;
+	font-weight: bold;
+	border-right: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+}
+.vqmm-list tbody td a {
+	text-decoration: underline;
+}
+.vqmm-list tbody td {
+	vertical-align: middle;
+	padding: 0px 5px;
+}
+.vqmm-list td {
+	border-right: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+}
+.vqmm-list .left {
+	text-align: left;
+	padding: 7px;
+}
+.vqmm-list .center {
+	text-align: center;
+	padding: 7px;
+}
+.row-odd  td{
 	background-color: #f4f4f8;
 }
-.row-odd td  {
-	background-color: #ffffff;
+.row-even td {
+	background-color: #fff;
 }

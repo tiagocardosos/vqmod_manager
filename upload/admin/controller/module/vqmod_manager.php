@@ -69,14 +69,10 @@ class ControllerModuleVQModManager extends Controller {
 
 		// Action Buttons
 		$this->data['action'] = $this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['backup'] = $this->url->link('module/vqmod_manager/vqmod_backup', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		// Clear Cache / Logs
 		$this->data['clear_log'] = $this->url->link('module/vqmod_manager/clear_log', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['clear_vqcache'] = $this->url->link('module/vqmod_manager/clear_vqcache', 'token=' . $this->session->data['token'], 'SSL');
-
-		// Backup VQMods
-		$this->data['backup'] = $this->url->link('module/vqmod_manager/vqmod_backup', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['vqcache_dump'] = $this->url->link('module/vqmod_manager/vqcache_dump', 'token=' . $this->session->data['token'], 'SSL');
 
 		// Paths

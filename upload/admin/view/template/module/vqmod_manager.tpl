@@ -21,22 +21,24 @@
     <div id="tabs" class="htabs"><a href="#tab-scripts"><?php echo $tab_scripts; ?></a><a href="#tab-settings"><?php echo $tab_settings; ?></a><a href="#tab-error"><?php echo $tab_error_log; ?></a><a href="#tab-about"><?php echo $tab_about; ?></a></div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
     <div id="tab-scripts">
-      <table class="list">
+      <table class="vqmm-list">
         <thead>
           <tr>
-            <td class="left"><?php echo $column_file_name; ?><hr /><i><?php echo $column_id; ?></i></td>
-            <td class="center"><?php echo $column_version; ?></td>
-            <td class="center"><?php echo $column_vqmver; ?></td>
-            <td class="center"><?php echo $column_author; ?></td>
-            <td class="center"><?php echo $column_status; ?></td>
-            <td class="center"><?php echo $column_action; ?></td>
-            <td class="center"><?php echo $column_delete; ?></td>
+            <th class="left"><?php echo $column_file_name; ?><hr /><i><?php echo $column_id; ?></i></th>
+            <th class="center"><?php echo $column_version; ?></th>
+            <th class="center"><?php echo $column_vqmver; ?></th>
+            <th class="center"><?php echo $column_author; ?></th>
+            <th class="center"><?php echo $column_status; ?></th>
+            <th class="center"><?php echo $column_action; ?></th>
+            <th class="center"><?php echo $column_delete; ?></th>
           </tr>
         </thead>
         <tbody>
           <?php if ($vqmods) { ?>
+          <?php $class = 'row-odd'; ?>
           <?php foreach ($vqmods as $vqmod) { ?>
-          <tr>
+          <?php $class = ($class == 'row-even' ? 'row-odd' : 'row-even'); ?>
+          <tr class="<?php echo $class; ?>">
             <td class="left"><strong><?php echo $vqmod['file_name']; ?></strong><br /><div class="description"><?php echo $vqmod['id']; ?><br /><?php echo $vqmod['invalid_xml']; ?></div></td>
             <td class="center"><?php echo $vqmod['version']; ?></td>
             <td class="center"><?php echo $vqmod['vqmver']; ?></td>
