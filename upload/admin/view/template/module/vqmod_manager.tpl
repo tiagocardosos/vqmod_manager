@@ -98,7 +98,7 @@
       <table class="form">
         <tr>
           <td><textarea rows="20" cols="160" id="error-log"><?php echo $log; ?></textarea>
-          <div style="text-align:right;"><a href="<?php echo $clear_log; ?>" class="button"><span><?php echo $button_clear; ?></span></a></div></td>
+          <div class="right"><a href="<?php echo $clear_log; ?>" class="button"><span><?php echo $button_clear; ?></span></a></div></td>
         </tr>
       </table>
     </div>
