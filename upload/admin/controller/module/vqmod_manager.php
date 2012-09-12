@@ -483,6 +483,7 @@ class ControllerModuleVQModManager extends Controller {
 		if (version_compare(VERSION, '1.5.4', '>=')) {
 			libxml_use_internal_errors(true);
 			$xml = simplexml_load_file($vqmod_script_dir . 'vqmod_opencart.xml');
+			libxml_clear_errors();
 
 			if (isset($xml->version) && version_compare($xml->vqmver, '2.1.7', '<')) {
 				$this->session->data['vqmod_installation_error'] = $this->language->get('error_opencart_xml_version');
@@ -492,7 +493,12 @@ class ControllerModuleVQModManager extends Controller {
 
 		// Check if VQMod class is added to OpenCart
 		if (!class_exists('VQMod')) {
-			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_opencart_integration');
+			if (is_file($vqmod_dir . 'install/index.php') && is_file($vqmod_dir . 'install/ugrsr.class.php')) {
+				$this->session->data['vqmod_installation_error'] = sprintf(HTTP_CATALOG . 'vqmod/install', $this->language->get('error_vqmod_install_link'));
+			} else {
+				$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_opencart_integration');
+			}
+			clearstatcache();
 			return false;
 		}
 

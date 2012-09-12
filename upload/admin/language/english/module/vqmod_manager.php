@@ -64,6 +64,7 @@ $_['error_opencart_xml_version']       = 'You appear to be using a version of "v
 $_['error_vqcache_dir']                = '"/vqmod/vqcache" directory does not appear to exist!';
 $_['error_vqcache_write']              = 'Unabled to write to "/vqmod/vqcache" directory!  Set permissions to 755 or 777 and try again.';
 $_['error_vqmod_dir']                  = '"/vqmod" directory does not appear to exist!';
+$_['error_vqmod_install_link']         = 'VQMod has does not appear to have been integrated with OpenCart! You can run the VQMod installer at <a href="%1$s">%1$s</a>.';
 $_['error_vqmod_opencart_integration'] = 'VQMod has does not appear to have been integrated with OpenCart!';
 $_['error_vqmod_script_dir']           = '"/vqmod/xml" directory does not appear to exist!';
 $_['error_vqmod_script_write']         = 'Unable to write to "/vqmod/xml" directory!  Set permissions to 755 or 777 and try again.';
