@@ -2,7 +2,7 @@ VQMOD MANAGER
 VQMod Manager is an OpenCart 1.5.x extension which allows you to centrally manage your VQMod scripts (upload, install/uninstall, delete, troubleshoot) from the OpenCart Admin.
 
 INSTALL
-Install the latest version of VQMod (vqmod.com) and upload the contents of the /upload folder to the root of your OpenCart store.
+Install the latest version of VQMod (vqmod.com) and upload the contents of the /upload folder to the root of your OpenCart store.  It will appear in the menu under Extension->VQMod Manager.  To access make sure your user group has access/modify permissions for module/vqmod_manager.
 
 VQMOD MANAGER 2.0 CHANGES
 -Confirms VQMod is properly installed
