@@ -69,6 +69,10 @@ $_['error_vqmod_opencart_integration'] = 'VQMod has does not appear to have been
 $_['error_vqmod_script_dir']           = '"/vqmod/xml" directory does not appear to exist!';
 $_['error_vqmod_script_write']         = 'Unable to write to "/vqmod/xml" directory!  Set permissions to 755 or 777 and try again.';
 
+// VQMod Manager Dependency Errors
+$_['error_simplexml']       = 'SimpleXML must be installed for VQMod Manager to work properly!';
+$_['error_ziparchive']      = 'ZipArchive must be installed for VQMod Manager to work properly!';
+
 // VQMod Log Errors
 $_['error_mod_aborted']     = 'Mod Aborted';
 $_['error_mod_skipped']     = 'Operation Skipped';

@@ -2,8 +2,6 @@
 class ControllerModuleVQModManager extends Controller {
 	/* @TODO:
 		VQMod installation check
-		Template Zebra stripes
-		Error log red if issues
 		Invalid XML
 		Direct large error log download
 		Disable deleting of vqmod_opencart.xml
@@ -542,6 +540,18 @@ class ControllerModuleVQModManager extends Controller {
 			return false;
 		} else {
 			@unlink($file);
+		}
+
+		// Check SimpleXML for VQMod Manager use
+		if (!function_exists('simplexml_load_file')) {
+			$this->session->data['vqmod_installation_error'] = $this->language->get('error_simplexml');
+			return false;
+		}
+
+		// Check ZipArchive for VQMod Manager use
+		if (!class_exists('ZipArchive')) {
+			$this->session->data['vqmod_installation_error'] = $this->language->get('error_ziparchive');
+			return false;
 		}
 
 		return true;
