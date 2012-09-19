@@ -9,6 +9,19 @@ class ControllerModuleVQModManager extends Controller {
 	*/
 	private $error = array();
 
+	public function __construct($registry) {
+		parent::__construct($registry);
+
+		// Paths and Files
+		$this->vqmod_dir = substr_replace(DIR_SYSTEM, '/vqmod/', -8);
+		$this->vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
+		$this->vqmod_script_files = substr_replace(DIR_SYSTEM, '/vqmod/xml/*.xml*', -8);
+		$this->vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
+		$this->vqcache_files = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/vq*', -8);
+		$this->vqmod_log = substr_replace(DIR_SYSTEM, '/vqmod/vqmod.log', -8);
+		$this->vqmod_opencart_script = substr_replace(DIR_SYSTEM, '/vqmod/xml/vqmod_opencart.xml', -8);
+	}
+
 	public function index() {
 		$this->load->language('module/vqmod_manager');
 
@@ -73,11 +86,6 @@ class ControllerModuleVQModManager extends Controller {
 		$this->data['clear_vqcache'] = $this->url->link('module/vqmod_manager/clear_vqcache', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['vqcache_dump'] = $this->url->link('module/vqmod_manager/vqcache_dump', 'token=' . $this->session->data['token'], 'SSL');
 
-		// Paths
-		$vqmod_dir = substr_replace(DIR_SYSTEM, '/vqmod/', -8);
-		$vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
-		$vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
-
 		// Check that VQMod is properly installed in store
 		if ($this->vqmod_installation_check()) {
 			$this->data['vqmod_is_installed'] = true;
@@ -95,7 +103,7 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// Detect mods
-		$vqmod_scripts = glob($vqmod_script_dir . '*.xml*');
+		$vqmod_scripts = glob($this->vqmod_script_files);
 
 		$this->data['vqmods'] = array();
 
@@ -148,23 +156,21 @@ class ControllerModuleVQModManager extends Controller {
 		// VQCache files
 		$this->data['vqcache'] = array();
 
-		if (is_dir($vqcache_dir)) {
-			$this->data['vqcache'] = array_diff(scandir($vqcache_dir), array('.', '..'));
+		if (is_dir($this->vqcache_dir)) {
+			$this->data['vqcache'] = array_diff(scandir($this->vqcache_dir), array('.', '..'));
 		}
 
 		// VQMod Error Log
-		$log_file = $vqmod_dir . 'vqmod.log';
-
-		if (file_exists($log_file) && filesize($log_file) > 0) {
+		if (file_exists($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
 			$this->data['tab_error_log'] = sprintf($this->language->get('highlight'), $this->language->get('tab_error_log'));
 
 			// Error if log file is larger than 6MB
-			if (filesize($log_file) > 6291456) {
-				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), (round((filesize($log_file) / 1048576), 2)));
-				$this->data['log'] = sprintf($this->language->get('error_log_size'), (round((filesize($log_file) / 1048576), 2)));
+			if (filesize($this->vqmod_log) > 6291456) {
+				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), (round((filesize($this->vqmod_log) / 1048576), 2)));
+				$this->data['log'] = sprintf($this->language->get('error_log_size'), (round((filesize($this->vqmod_log) / 1048576), 2)));
 			// Regular log
 			} else {
-				$this->data['log'] = file_get_contents($log_file, FILE_USE_INCLUDE_PATH, null);
+				$this->data['log'] = file_get_contents($this->vqmod_log, FILE_USE_INCLUDE_PATH, null);
 			}
 
 		// No log / empty log
@@ -212,11 +218,10 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
-			$vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
 			$vqmod_script = $this->request->get['vqmod'];
 
-			if (file_exists($vqmod_script_dir . $vqmod_script . '.xml_')) {
-				rename($vqmod_script_dir . $vqmod_script . '.xml_', $vqmod_script_dir . $vqmod_script . '.xml');
+			if (file_exists($this->vqmod_script_dir . $vqmod_script . '.xml_')) {
+				rename($this->vqmod_script_dir . $vqmod_script . '.xml_', $this->vqmod_script_dir . $vqmod_script . '.xml');
 
 				$this->clear_vqcache(true);
 
@@ -235,11 +240,10 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
-			$vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
 			$vqmod_script = $this->request->get['vqmod'];
 
-			if (file_exists($vqmod_script_dir . $vqmod_script . '.xml')) {
-				rename($vqmod_script_dir . $vqmod_script . '.xml', $vqmod_script_dir . $vqmod_script . '.xml_');
+			if (file_exists($this->vqmod_script_dir . $vqmod_script . '.xml')) {
+				rename($this->vqmod_script_dir . $vqmod_script . '.xml', $this->vqmod_script_dir . $vqmod_script . '.xml_');
 
 				$this->clear_vqcache(true);
 
@@ -258,8 +262,6 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
-			$vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
-
 			$file = $this->request->files['vqmod_file']['tmp_name'];
 			$file_name = $this->request->files['vqmod_file']['name'];
 
@@ -302,7 +304,7 @@ class ControllerModuleVQModManager extends Controller {
 						libxml_clear_errors();
 						$this->session->data['error'] = $this->language->get('error_invalid_xml');
 
-					} elseif (move_uploaded_file($file, $vqmod_script_dir . $file_name) == false) {
+					} elseif (move_uploaded_file($file, $this->vqmod_script_dir . $file_name) == false) {
 						$this->session->data['error'] = $this->language->get('error_move');
 
 					} else {
@@ -323,10 +325,9 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
-			$vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
 			$vqmod_script = $this->request->get['vqmod'];
 
-			if (unlink($vqmod_script_dir . $vqmod_script)) {
+			if (unlink($this->vqmod_script_dir . $vqmod_script)) {
 				$this->clear_vqcache(true);
 
 				$this->session->data['success'] = $this->language->get('success_delete');
@@ -345,8 +346,7 @@ class ControllerModuleVQModManager extends Controller {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
-			$vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
-			$vqmod_scripts = glob($vqmod_script_dir . '*.xml*');
+			$vqmod_scripts = glob($this->vqmod_script_files);
 
 			$temp = tempnam('tmp', 'zip');
 
@@ -377,8 +377,7 @@ class ControllerModuleVQModManager extends Controller {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
-			$vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
-			$vqcache_files = glob($vqcache_dir . 'vq*');
+			$vqcache_files = glob($this->vqcache_files);
 
 			$temp = tempnam('tmp', 'zip');
 
@@ -408,8 +407,7 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
-			$vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
-			$files = glob($vqcache_dir . 'vq*');
+			$files = glob($this->vqcache_files);
 
 			if ($files) {
 				foreach ($files as $file) {
@@ -435,8 +433,7 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
-			$vqmod_dir = substr_replace(DIR_SYSTEM, '/vqmod/', -8);
-			$file = $vqmod_dir . 'vqmod.log';
+			$file = $this->vqmod_log;
 
 			$handle = fopen($file, 'w+');
 
@@ -449,30 +446,26 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	private function vqmod_installation_check() {
-		$vqmod_dir = substr_replace(DIR_SYSTEM, '/vqmod/', -8);
-		$vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
-		$vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
-
 		// Check if /vqmod directory exists
-		if (!is_dir($vqmod_dir)) {
+		if (!is_dir($this->vqmod_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_dir');
 			return false;
 		}
 
 		// Check if /vqmod/xml directory exists
-		if (!is_dir($vqmod_script_dir)) {
+		if (!is_dir($this->vqmod_script_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_script_dir');
 			return false;
 		}
 
 		// Check if /vqmod/vqcache directory exists
-		if (!is_dir($vqcache_dir)) {
+		if (!is_dir($this->vqcache_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqcache_dir');
 			return false;
 		}
 
 		// Check that vqmod_opencart.xml exists
-		if (!is_file($vqmod_script_dir . 'vqmod_opencart.xml')) {
+		if (!is_file($this->vqmod_opencart_script) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_opencart_xml');
 			return false;
 		}
@@ -480,7 +473,7 @@ class ControllerModuleVQModManager extends Controller {
 		// If OpenCart 1.5.4+ check that vqmod_opencart.xml 2.1.7 or later is being used
 		if (version_compare(VERSION, '1.5.4', '>=')) {
 			libxml_use_internal_errors(true);
-			$xml = simplexml_load_file($vqmod_script_dir . 'vqmod_opencart.xml');
+			$xml = simplexml_load_file($this->vqmod_opencart_script);
 			libxml_clear_errors();
 
 			if (isset($xml->version) && version_compare($xml->vqmver, '2.1.7', '<')) {
@@ -491,7 +484,7 @@ class ControllerModuleVQModManager extends Controller {
 
 		// Check if VQMod class is added to OpenCart
 		if (!class_exists('VQMod')) {
-			if (is_file($vqmod_dir . 'install/index.php') && is_file($vqmod_dir . 'install/ugrsr.class.php')) {
+			if (is_file($this->vqmod_dir . 'install/index.php') && is_file($this->vqmod_dir . 'install/ugrsr.class.php')) {
 				$this->session->data['vqmod_installation_error'] = sprintf(HTTP_CATALOG . 'vqmod/install', $this->language->get('error_vqmod_install_link'));
 			} else {
 				$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_opencart_integration');
@@ -501,7 +494,7 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// Check VQMod Error Log Writing
-		$file = $vqmod_dir . 'test';
+		$file = $this->vqmod_dir . 'test';
 		$handle = fopen($file, 'a+');
 
 		fwrite($handle, '');
@@ -515,7 +508,7 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// Check VQMod Script Writing
-		$file = $vqmod_script_dir . 'test';
+		$file = $this->vqmod_script_dir . 'test';
 		$handle = fopen($file, 'a+');
 
 		fwrite($handle, '');
@@ -529,7 +522,7 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// Check VQCache Writing
-		$file = $vqcache_dir . 'test';
+		$file = $this->vqcache_dir . 'test';
 		$handle = fopen($file, 'a+');
 
 		fwrite($handle, '');
