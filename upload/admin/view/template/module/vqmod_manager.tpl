@@ -84,6 +84,10 @@
            <td><?php echo $entry_backup; ?></td>
            <td><a href="<?php echo $backup; ?>" class="button"><span><?php echo $button_backup; ?></span></a></td>
          </tr>
+         <tr>
+           <td><?php echo $entry_vqmod_path; ?></td>
+           <td><?php echo $vqmod_path; ?></td>
+         </tr>
          <?php if ($vqmod_vars) { ?>
          <?php foreach ($vqmod_vars as $setting => $value) { ?>
          <tr>

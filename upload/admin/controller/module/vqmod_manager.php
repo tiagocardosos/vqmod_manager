@@ -178,6 +178,13 @@ class ControllerModuleVQModManager extends Controller {
 			$this->data['log'] = '';
 		}
 
+		// VQMod Path
+		if (is_dir($this->vqmod_dir)) {
+			$this->data['vqmod_path'] = $this->vqmod_dir;
+		} else {
+			$this->data['vqmod_path'] = '';
+		}
+
 		// VQMod class variables
 		$vqmod_vars = get_class_vars('VQMod');
 
@@ -465,7 +472,7 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// Check that vqmod_opencart.xml exists
-		if (!is_file($this->vqmod_opencart_script) {
+		if (!is_file($this->vqmod_opencart_script)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_opencart_xml');
 			return false;
 		}
