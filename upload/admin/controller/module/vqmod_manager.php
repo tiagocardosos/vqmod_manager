@@ -459,6 +459,12 @@ class ControllerModuleVQModManager extends Controller {
 			return false;
 		}
 
+		// Check if vqmod.php exists
+		if (!is_file($this->vqmod_dir . 'vqmod.php')) {
+			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_core');
+			return false;
+		}
+
 		// Check if /vqmod/xml directory exists
 		if (!is_dir($this->vqmod_script_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_script_dir');

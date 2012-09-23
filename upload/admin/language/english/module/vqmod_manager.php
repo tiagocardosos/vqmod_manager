@@ -3,8 +3,6 @@
 $_['button_backup']        = 'Backup';
 $_['button_cancel']        = 'Cancel';
 $_['button_clear']         = 'Clear';
-$_['button_save']          = 'Save';
-$_['button_upload']        = 'Upload';
 $_['button_vqcache_dump']  = 'vqcache Dump';
 
 // Heading
@@ -21,14 +19,12 @@ $_['column_version']       = 'Version';
 $_['column_vqmver']        = 'VQMod Version';
 
 // Entry
-$_['entry_author']         = 'Author:';
+$_['entry_author']         = 'Author:'; // Change
 $_['entry_backup']         = 'Backup VQMod Scripts:';
 $_['entry_ext_version']    = 'VQMod Manager Version:';
 $_['entry_forum']          = 'Forum Support Thread:';
 $_['entry_license']        = 'License:';
-$_['entry_status']         = 'VQMod Manager Status:';
 $_['entry_upload']         = 'VQMod Upload:';
-$_['entry_usecache']       = 'Output Caching:'; // DELETE?
 $_['entry_vqcache']        = 'VQMod Cache:';
 $_['entry_vqmod_path']     = 'VQMod Path:';
 $_['entry_website']        = 'Website:';
@@ -63,6 +59,7 @@ $_['error_opencart_xml']               = '"/vqmod/xml/vqmod_opencart.xml" does n
 $_['error_opencart_xml_version']       = 'You appear to be using a version of "vqmod_opencart.xml" that is out-of-date for your store!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqcache_dir']                = '"/vqmod/vqcache" directory does not appear to exist!';
 $_['error_vqcache_write']              = 'Unabled to write to "/vqmod/vqcache" directory!  Set permissions to 755 or 777 and try again.';
+$_['error_vqmod_core']                 = '"vqmod.php" is missing!';
 $_['error_vqmod_dir']                  = '"/vqmod" directory does not appear to exist!';
 $_['error_vqmod_install_link']         = 'VQMod has does not appear to have been integrated with OpenCart! You can run the VQMod installer at <a href="%1$s">%1$s</a>.';
 $_['error_vqmod_opencart_integration'] = 'VQMod has does not appear to have been integrated with OpenCart!';
