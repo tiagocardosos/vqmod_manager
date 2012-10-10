@@ -453,6 +453,8 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	private function vqmod_installation_check() {
+		clearstatcache();
+
 		// Check if /vqmod directory exists
 		if (!is_dir($this->vqmod_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_dir');
@@ -502,50 +504,25 @@ class ControllerModuleVQModManager extends Controller {
 			} else {
 				$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_opencart_integration');
 			}
-			clearstatcache();
 			return false;
 		}
 
 		// Check VQMod Error Log Writing
-		$file = $this->vqmod_dir . 'test';
-		$handle = fopen($file, 'a+');
-
-		fwrite($handle, '');
-		fclose($handle);
-
-		if (!file_exists($file)) {
+		if (!is_writable($this->vqmod_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_error_log_write');
 			return false;
-		} else {
-			@unlink($file);
 		}
 
 		// Check VQMod Script Writing
-		$file = $this->vqmod_script_dir . 'test';
-		$handle = fopen($file, 'a+');
-
-		fwrite($handle, '');
-		fclose($handle);
-
-		if (!file_exists($file)) {
+		if (!is_writable($this->vqmod_script_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_script_write');
 			return false;
-		} else {
-			@unlink($file);
 		}
 
 		// Check VQCache Writing
-		$file = $this->vqcache_dir . 'test';
-		$handle = fopen($file, 'a+');
-
-		fwrite($handle, '');
-		fclose($handle);
-
-		if (!file_exists($file)) {
+		if (!is_writable($this->vqcache_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqcache_write');
 			return false;
-		} else {
-			@unlink($file);
 		}
 
 		// Check SimpleXML for VQMod Manager use
