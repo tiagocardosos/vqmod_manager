@@ -63,7 +63,7 @@ class ControllerModuleVQModManager extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -193,11 +193,11 @@ class ControllerModuleVQModManager extends Controller {
 		if ($vqmod_vars) {
 			foreach ($vqmod_vars as $setting => $value) {
 				if ($setting == 'useCache') {
-					$this->data['vqmod_vars']['useCache'] = ($value == true ? $this->language->get('text_enabled') : $this->language->get('text_disabled'));
+					$this->data['vqmod_vars']['useCache'] = ($value === true ? $this->language->get('text_enabled') : $this->language->get('text_disabled'));
 				}
 
 				if ($setting == 'logging') {
-					$this->data['vqmod_vars']['Error Logging'] = ($value == true ? $this->language->get('text_enabled') : $this->language->get('text_disabled'));
+					$this->data['vqmod_vars']['Error Logging'] = ($value === true ? $this->language->get('text_enabled') : $this->language->get('text_disabled'));
 				}
 
 				if ($setting == 'cacheTime') {
@@ -311,7 +311,7 @@ class ControllerModuleVQModManager extends Controller {
 						libxml_clear_errors();
 						$this->session->data['error'] = $this->language->get('error_invalid_xml');
 
-					} elseif (move_uploaded_file($file, $this->vqmod_script_dir . $file_name) == false) {
+					} elseif (move_uploaded_file($file, $this->vqmod_script_dir . $file_name) === false) {
 						$this->session->data['error'] = $this->language->get('error_move');
 
 					} else {
@@ -455,6 +455,12 @@ class ControllerModuleVQModManager extends Controller {
 	private function vqmod_installation_check() {
 		clearstatcache();
 
+		// Check SimpleXML for VQMod Manager use
+		if (!function_exists('simplexml_load_file')) {
+			$this->session->data['vqmod_installation_error'] = $this->language->get('error_simplexml');
+			return false;
+		}
+
 		// Check if /vqmod directory exists
 		if (!is_dir($this->vqmod_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_dir');
@@ -491,7 +497,7 @@ class ControllerModuleVQModManager extends Controller {
 			$xml = simplexml_load_file($this->vqmod_opencart_script);
 			libxml_clear_errors();
 
-			if (isset($xml->version) && version_compare($xml->vqmver, '2.1.7', '<')) {
+			if (isset($xml->vqmver) && version_compare($xml->vqmver, '2.1.7', '<')) {
 				$this->session->data['vqmod_installation_error'] = $this->language->get('error_opencart_xml_version');
 				return false;
 			}
@@ -522,12 +528,6 @@ class ControllerModuleVQModManager extends Controller {
 		// Check VQCache Writing
 		if (!is_writable($this->vqcache_dir)) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqcache_write');
-			return false;
-		}
-
-		// Check SimpleXML for VQMod Manager use
-		if (!function_exists('simplexml_load_file')) {
-			$this->session->data['vqmod_installation_error'] = $this->language->get('error_simplexml');
 			return false;
 		}
 
