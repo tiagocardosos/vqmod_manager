@@ -15,7 +15,7 @@ class ControllerModuleVQModManager extends Controller {
 		// Paths and Files
 		$this->vqmod_dir = substr_replace(DIR_SYSTEM, '/vqmod/', -8);
 		$this->vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
-		$this->vqmod_script_files = substr_replace(DIR_SYSTEM, '/vqmod/xml/*.xml*', -8);
+		$this->vqmod_script_files = substr_replace(DIR_SYSTEM, '/vqmod/xml/*.{xml,xml_}', -8);
 		$this->vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
 		$this->vqcache_files = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/vq*', -8);
 		$this->vqmod_log = substr_replace(DIR_SYSTEM, '/vqmod/vqmod.log', -8);
@@ -103,7 +103,7 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// Detect mods
-		$vqmod_scripts = glob($this->vqmod_script_files);
+		$vqmod_scripts = glob($this->vqmod_script_files, GLOB_BRACE);
 
 		$this->data['vqmods'] = array();
 
@@ -353,7 +353,7 @@ class ControllerModuleVQModManager extends Controller {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
-			$vqmod_scripts = glob($this->vqmod_script_files);
+			$vqmod_scripts = glob($this->vqmod_script_files, GLOB_BRACE);
 
 			$temp = tempnam('tmp', 'zip');
 
@@ -370,7 +370,7 @@ class ControllerModuleVQModManager extends Controller {
 			header('Expires: 0');
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/zip');
-			header('Content-Disposition: attachment; filename=vqmod_backup_' . date('Y-m-d') . '.zip');
+			header('Content-Disposition: attachment; filename=vqmod_scripts_backup_' . date('Y-m-d') . '.zip');
 			header('Content-Transfer-Encoding: binary');
 			readfile($temp);
 			@unlink($temp);
