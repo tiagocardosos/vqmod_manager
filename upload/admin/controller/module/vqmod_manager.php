@@ -491,6 +491,12 @@ class ControllerModuleVQModManager extends Controller {
 			return false;
 		}
 
+		// Check that OpenCart 1.5.x is being used - other errors will appear on the page if they're using 1.4.x but at least the user will be told what the issue is
+		if (!defined('VERSION') || version_compare(VERSION, '1.5.0', '<')) {
+			$this->session->data['vqmod_installation_error'] = $this->language->get('error_opencart_version');
+			return false;
+		}
+
 		// If OpenCart 1.5.4+ check that vqmod_opencart.xml 2.1.7 or later is being used
 		if (version_compare(VERSION, '1.5.4', '>=')) {
 			libxml_use_internal_errors(true);

@@ -55,6 +55,7 @@ $_['error_write_fail']           = 'Warning: Failed to write VQMod script!';
 
 // VQMod Installation Errors
 $_['error_error_log_write']            = 'Unabled to write to VQMod error log! Please set "/vqmod" directory permissions to 755 or 777 and try again.';
+$_['error_opencart_version']           = 'OpenCart 1.5.x or later is required to use VQMod Manager!';
 $_['error_opencart_xml']               = '"/vqmod/xml/vqmod_opencart.xml" does not appear to exist!  Please upload the OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_opencart_xml_version']       = 'You appear to be using a version of "vqmod_opencart.xml" that is out-of-date for your store!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqcache_dir']                = '"/vqmod/vqcache" directory does not appear to exist!';
