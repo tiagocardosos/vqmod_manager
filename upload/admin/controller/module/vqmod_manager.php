@@ -1,12 +1,12 @@
 <?php
 class ControllerModuleVQModManager extends Controller {
-	/* @TODO:
-		VQMod installation check
-		Invalid XML
-		Direct large error log download
-		Disable deleting of vqmod_opencart.xml
-		Check for unused language text
-	*/
+	/** 
+	 * @todo  VQMod installation check
+	 * @todo  Invalid XML
+	 * @todo  Direct large error log download
+	 * @todo  Disable deleting of vqmod_opencart.xml
+	 * @todo  Check for unused language text
+	 */
 	private $error = array();
 
 	public function __construct($registry) {
