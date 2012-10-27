@@ -161,12 +161,12 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// VQMod Error Log
-		if (file_exists($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
+		if (is_file($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
 			$this->data['tab_error_log'] = sprintf($this->language->get('highlight'), $this->language->get('tab_error_log'));
 
 			// Error if log file is larger than 6MB
 			if (filesize($this->vqmod_log) > 6291456) {
-				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), (round((filesize($this->vqmod_log) / 1048576), 2)));
+				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), round((filesize($this->vqmod_log) / 1048576), 2));
 				$this->data['log'] = sprintf($this->language->get('error_log_size'), (round((filesize($this->vqmod_log) / 1048576), 2)));
 			// Regular log
 			} else {
@@ -227,7 +227,7 @@ class ControllerModuleVQModManager extends Controller {
 		} else {
 			$vqmod_script = $this->request->get['vqmod'];
 
-			if (file_exists($this->vqmod_script_dir . $vqmod_script . '.xml_')) {
+			if (is_file($this->vqmod_script_dir . $vqmod_script . '.xml_')) {
 				rename($this->vqmod_script_dir . $vqmod_script . '.xml_', $this->vqmod_script_dir . $vqmod_script . '.xml');
 
 				$this->clear_vqcache(true);
@@ -236,6 +236,8 @@ class ControllerModuleVQModManager extends Controller {
 			} else {
 				$this->session->data['error'] = $this->language->get('error_install');
 			}
+
+			clearstatcache();
 		}
 
 		$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
@@ -249,7 +251,7 @@ class ControllerModuleVQModManager extends Controller {
 		} else {
 			$vqmod_script = $this->request->get['vqmod'];
 
-			if (file_exists($this->vqmod_script_dir . $vqmod_script . '.xml')) {
+			if (is_file($this->vqmod_script_dir . $vqmod_script . '.xml')) {
 				rename($this->vqmod_script_dir . $vqmod_script . '.xml', $this->vqmod_script_dir . $vqmod_script . '.xml_');
 
 				$this->clear_vqcache(true);
@@ -258,6 +260,8 @@ class ControllerModuleVQModManager extends Controller {
 			} else {
 				$this->session->data['error'] = $this->language->get('error_uninstall');
 			}
+
+			clearstatcache();
 		}
 
 		$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
@@ -355,27 +359,9 @@ class ControllerModuleVQModManager extends Controller {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
-			$vqmod_scripts = glob($this->vqmod_script_files, GLOB_BRACE);
+			$targets = glob($this->vqmod_script_files, GLOB_BRACE);
 
-			$temp = tempnam('tmp', 'zip');
-
-			$zip = new ZipArchive();
-			$zip->open($temp, ZipArchive::OVERWRITE);
-
-			foreach ($vqmod_scripts as $vqmod_script) {
-				$zip->addFile($vqmod_script, basename($vqmod_script));
-			}
-
-			$zip->close();
-
-			header('Pragma: public');
-			header('Expires: 0');
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/zip');
-			header('Content-Disposition: attachment; filename=vqmod_scripts_backup_' . date('Y-m-d') . '.zip');
-			header('Content-Transfer-Encoding: binary');
-			readfile($temp);
-			@unlink($temp);
+			$this->send_zip($targets, 'vqmod_scripts_backup');
 		}
 	}
 
@@ -386,27 +372,9 @@ class ControllerModuleVQModManager extends Controller {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
-			$vqcache_files = glob($this->vqcache_files);
+			$targets = glob($this->vqcache_files);
 
-			$temp = tempnam('tmp', 'zip');
-
-			$zip = new ZipArchive();
-			$zip->open($temp, ZipArchive::OVERWRITE);
-
-			foreach ($vqcache_files as $vqcache_file) {
-				$zip->addFile($vqcache_file, basename($vqcache_file));
-			}
-
-			$zip->close();
-
-			header('Pragma: public');
-			header('Expires: 0');
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/zip');
-			header('Content-Disposition: attachment; filename=vqcache_dump_' . date('Y-m-d_H-i') . '.zip');
-			header('Content-Transfer-Encoding: binary');
-			readfile($temp);
-			@unlink($temp);
+			$this->send_zip($targets, 'vqcache_dump');
 		}
 	}
 
@@ -417,24 +385,12 @@ class ControllerModuleVQModManager extends Controller {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
 		} elseif (is_file($this->vqmod_log)) {
-			$temp = tempnam('tmp', 'zip');
+			$targets = array($this->vqmod_log);
 
-			$zip = new ZipArchive();
-			$zip->open($temp, ZipArchive::OVERWRITE);
-
-			$zip->addFile($this->vqmod_log, basename($this->vqmod_log));
-
-			$zip->close();
-
-			header('Pragma: public');
-			header('Expires: 0');
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/zip');
-			header('Content-Disposition: attachment; filename=vqmod_log_' . date('Y-m-d_H-i') . '.zip');
-			header('Content-Transfer-Encoding: binary');
-			readfile($temp);
-			@unlink($temp);
+			$this->send_zip($targets, 'vqmod_log');
 		}
+
+		clearstatcache();
 	}
 
 	public function clear_vqcache($return = false) {
@@ -447,10 +403,12 @@ class ControllerModuleVQModManager extends Controller {
 
 			if ($files) {
 				foreach ($files as $file) {
-					if (file_exists($file)) {
-						@unlink($file);
+					if (is_file($file)) {
+						unlink($file);
 					}
 				}
+
+				clearstatcache();
 			}
 
 			if ($return) {
@@ -479,6 +437,31 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
+	}
+
+	private function send_zip($targets, $filename) {
+		$temp = tempnam('tmp', 'zip');
+
+		$zip = new ZipArchive();
+		$zip->open($temp, ZipArchive::OVERWRITE);
+
+		foreach ($targets as $target) {
+			if (is_file($target)) {
+				$zip->addFile($target, basename($target));
+			}
+		}
+
+		$zip->close();
+
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/zip');
+		header('Content-Disposition: attachment; filename=' . $filename . '_' . date('Y-m-d') . '.zip');
+		header('Content-Transfer-Encoding: binary');
+		readfile($temp);
+		unlink($temp);
+		clearstatcache();
 	}
 
 	private function vqmod_installation_check() {
