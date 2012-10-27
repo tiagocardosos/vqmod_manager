@@ -2,10 +2,9 @@
 class ControllerModuleVQModManager extends Controller {
 	/** 
 	 * @todo  VQMod installation check
-	 * @todo  Invalid XML
-	 * @todo  Direct large error log download
-	 * @todo  Disable deleting of vqmod_opencart.xml
+	 * @todo  Invalid XML handling
 	 * @todo  Check for unused language text
+	 * @todo  VQMod class variables language
 	 */
 	private $error = array();
 
@@ -84,6 +83,7 @@ class ControllerModuleVQModManager extends Controller {
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['clear_log'] = $this->url->link('module/vqmod_manager/clear_log', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['clear_vqcache'] = $this->url->link('module/vqmod_manager/clear_vqcache', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['download_log'] = $this->url->link('module/vqmod_manager/vqmod_log_download', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['vqcache_dump'] = $this->url->link('module/vqmod_manager/vqcache_dump', 'token=' . $this->session->data['token'], 'SSL');
 
 		// Check that VQMod is properly installed in store
@@ -331,6 +331,8 @@ class ControllerModuleVQModManager extends Controller {
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
+		} elseif ($this->request->get['vqmod'] == 'vqmod_opencart.xml') {
+			$this->session->data['error'] = $this->language->get('error_vqmod_opencart');
 		} else {
 			$vqmod_script = $this->request->get['vqmod'];
 
@@ -402,6 +404,33 @@ class ControllerModuleVQModManager extends Controller {
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/zip');
 			header('Content-Disposition: attachment; filename=vqcache_dump_' . date('Y-m-d_H-i') . '.zip');
+			header('Content-Transfer-Encoding: binary');
+			readfile($temp);
+			@unlink($temp);
+		}
+	}
+
+	public function vqmod_log_download() {
+		$this->load->language('module/vqmod_manager');
+
+		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
+			$this->session->data['error'] = $this->language->get('error_permission');
+			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
+		} elseif (is_file($this->vqmod_log)) {
+			$temp = tempnam('tmp', 'zip');
+
+			$zip = new ZipArchive();
+			$zip->open($temp, ZipArchive::OVERWRITE);
+
+			$zip->addFile($this->vqmod_log, basename($this->vqmod_log));
+
+			$zip->close();
+
+			header('Pragma: public');
+			header('Expires: 0');
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/zip');
+			header('Content-Disposition: attachment; filename=vqmod_log_' . date('Y-m-d_H-i') . '.zip');
 			header('Content-Transfer-Encoding: binary');
 			readfile($temp);
 			@unlink($temp);

@@ -3,6 +3,7 @@
 $_['button_backup']        = 'Backup';
 $_['button_cancel']        = 'Cancel';
 $_['button_clear']         = 'Clear';
+$_['button_download_log']  = 'Download Log';
 $_['button_vqcache_dump']  = 'vqcache Dump';
 
 // Heading
@@ -37,11 +38,12 @@ $_['error_delete']         = 'Warning: Unable to delete VQMod script!';
 $_['error_filetype']       = 'Warning: Invalid filetype!  Please only upload .xml files.';
 $_['error_install']        = 'Warning: Unable to install VQMod script!';
 $_['error_invalid_xml']    = 'Warning: VQMod script XML syntax does not appear to be valid!';
-$_['error_log_size']       = 'Warning: Your VQMod error log is %sMBs.  The limit for VQMod Manager is 6MB.  If you need to view the errors you should download the log by FTP.  Otherwise consider clearing it below.';
+$_['error_log_size']       = 'Warning: Your VQMod error log is %sMBs.  The limit for VQMod Manager is 6MB.  You can download the error log by FTP or by clicking the \'Download Log\' button in the Error Log tab.  Otherwise consider clearing it.';
 $_['error_moddedfile']     = 'Warning: VQMod script attempts to mod file \'%s\' which does not appear to exist!';
 $_['error_move']           = 'Warning: Unable to save file on server.  Please check directory permissions.';
 $_['error_permission']     = 'Warning: You do not have permission to modify module VQMod Manager!';
 $_['error_uninstall']      = 'Warning: Unable to uninstall VQMod script!';
+$_['error_vqmod_opencart'] = 'Warning: \'vqmod_opencart.xml\' is rquired for VQMod to function properly!';
 
 // $_FILE Upload Errors
 $_['error_form_max_file_size']   = 'Warning: VQMod script exceeds max allowable size!';
@@ -60,8 +62,8 @@ $_['error_opencart_xml']               = '"/vqmod/xml/vqmod_opencart.xml" does n
 $_['error_opencart_xml_version']       = 'You appear to be using a version of "vqmod_opencart.xml" that is out-of-date for your store!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqcache_dir']                = '"/vqmod/vqcache" directory does not appear to exist!';
 $_['error_vqcache_write']              = 'Unabled to write to "/vqmod/vqcache" directory!  Set permissions to 755 or 777 and try again.';
-$_['error_vqmod_core']                 = '"vqmod.php" is missing!';
-$_['error_vqmod_dir']                  = '"/vqmod" directory does not appear to exist!';
+$_['error_vqmod_core']                 = 'Required file "vqmod.php" is missing!';
+$_['error_vqmod_dir']                  = 'The "/vqmod" directory does not appear to exist!';
 $_['error_vqmod_install_link']         = 'VQMod has does not appear to have been integrated with OpenCart! You can run the VQMod installer at <a href="%1$s">%1$s</a>.';
 $_['error_vqmod_opencart_integration'] = 'VQMod has does not appear to have been integrated with OpenCart!';
 $_['error_vqmod_script_dir']           = '"/vqmod/xml" directory does not appear to exist!';
