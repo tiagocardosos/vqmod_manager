@@ -89,10 +89,10 @@
            <td><?php echo $vqmod_path; ?></td>
          </tr>
          <?php if ($vqmod_vars) { ?>
-         <?php foreach ($vqmod_vars as $setting => $value) { ?>
+         <?php foreach ($vqmod_vars as $vqmod_var) { ?>
          <tr>
-           <td><?php echo $setting; ?>:</td>
-           <td><?php echo $value; ?></td>
+           <td><?php echo $vqmod_var['setting']; ?></td>
+           <td><?php echo $vqmod_var['value']; ?></td>
          </tr>
          <?php } ?>
          <?php } ?>
@@ -119,6 +119,10 @@
         <tr>
           <td><?php echo $entry_website; ?></td>
           <td><a class="about" onclick="window.open('http://opencarthelp.com');">http://opencarthelp.com</a></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_ext_store; ?></td>
+          <td><a class="about" onclick="window.open('http://www.opencart.com/index.php?route=extension/extension/info&amp;extension_id=2969&amp;filter_username=rph');">http://www.opencart.com/index.php?route=extension/extension/info&amp;extension_id=2969</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_forum; ?></td>

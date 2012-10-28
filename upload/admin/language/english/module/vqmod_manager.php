@@ -22,6 +22,7 @@ $_['column_vqmver']        = 'VQMod Version';
 // Entry
 $_['entry_author']         = 'Author:'; // Change
 $_['entry_backup']         = 'Backup VQMod Scripts:';
+$_['entry_ext_store']      = 'Latest Version:';
 $_['entry_ext_version']    = 'VQMod Manager Version:';
 $_['entry_forum']          = 'Forum Support Thread:';
 $_['entry_license']        = 'License:';
@@ -33,11 +34,11 @@ $_['entry_website']        = 'Website:';
 // Text Highlighting
 $_['highlight']            = '<span class="highlight">%s</span>';
 
-// Error
+// VQMod Manager Use Errors
 $_['error_delete']         = 'Warning: Unable to delete VQMod script!';
 $_['error_filetype']       = 'Warning: Invalid filetype!  Please only upload .xml files.';
 $_['error_install']        = 'Warning: Unable to install VQMod script!';
-$_['error_invalid_xml']    = 'Warning: VQMod script XML syntax does not appear to be valid!';
+$_['error_invalid_xml']    = 'Warning: VQMod script XML syntax is not valid!  Please contact the author for support.';
 $_['error_log_size']       = 'Warning: Your VQMod error log is %sMBs.  The limit for VQMod Manager is 6MB.  You can download the error log by FTP or by clicking the \'Download Log\' button in the Error Log tab.  Otherwise consider clearing it.';
 $_['error_moddedfile']     = 'Warning: VQMod script attempts to mod file \'%s\' which does not appear to exist!';
 $_['error_move']           = 'Warning: Unable to save file on server.  Please check directory permissions.';
@@ -76,6 +77,11 @@ $_['error_ziparchive']      = 'ZipArchive must be installed for VQMod Manager to
 // VQMod Log Errors
 $_['error_mod_aborted']     = 'Mod Aborted';
 $_['error_mod_skipped']     = 'Operation Skipped';
+
+// VQMod Variable Settings
+$_['setting_logging']       = 'Error Logging:';
+$_['setting_usecache']      = 'useCache:';
+$_['setting_cachetime']     = 'cacheTime:';
 
 // Success
 $_['success_clear_vqcache'] = 'Success: VQMod cache cleared!';

@@ -4,7 +4,7 @@ class ControllerModuleVQModManager extends Controller {
 	 * @todo  VQMod installation check
 	 * @todo  Invalid XML handling
 	 * @todo  Check for unused language text
-	 * @todo  VQMod class variables language
+	 * @todo  VQMod script rename
 	 */
 	private $error = array();
 
@@ -19,6 +19,8 @@ class ControllerModuleVQModManager extends Controller {
 		$this->vqcache_files = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/vq*', -8);
 		$this->vqmod_log = substr_replace(DIR_SYSTEM, '/vqmod/vqmod.log', -8);
 		$this->vqmod_opencart_script = substr_replace(DIR_SYSTEM, '/vqmod/xml/vqmod_opencart.xml', -8);
+
+		clearstatcache();
 	}
 
 	public function index() {
@@ -109,7 +111,9 @@ class ControllerModuleVQModManager extends Controller {
 
 		if (!empty($vqmod_scripts)) {
 			foreach ($vqmod_scripts as $vqmod_script) {
-				if (strpos($vqmod_script, '.xml_')) {
+				$extension = pathinfo($vqmod_script, PATHINFO_EXTENSION);
+
+				if ($extension == 'xml_') {
 					$file = basename($vqmod_script, '.xml_');
 				} else {
 					$file = basename($vqmod_script, '.xml');
@@ -117,7 +121,7 @@ class ControllerModuleVQModManager extends Controller {
 
 				$action = array();
 
-				if (strpos($vqmod_script, '.xml_')) {
+				if ($extension == 'xml_') {
 					$action[] = array(
 						'text' => $this->language->get('text_install'),
 						'href' => $this->url->link('module/vqmod_manager/vqmod_install', 'token=' . $this->session->data['token'] . '&vqmod=' . $file, 'SSL')
@@ -139,13 +143,13 @@ class ControllerModuleVQModManager extends Controller {
 					$invalid_xml = '';
 				}
 
-				$this->data['vqmods'][$vqmod_script] = array(
+				$this->data['vqmods'][] = array(
 					'file_name'   => basename($vqmod_script, ''),
 					'id'          => isset($xml->id) ? $xml->id : $this->language->get('text_unavailable'),
 					'version'     => isset($xml->version) ? $xml->version : $this->language->get('text_unavailable'),
 					'vqmver'      => isset($xml->vqmver) ? $xml->vqmver : $this->language->get('text_unavailable'),
 					'author'      => isset($xml->author) ? $xml->author : $this->language->get('text_unavailable'),
-					'status'      => strpos($vqmod_script, '.xml_') ? sprintf($this->language->get('highlight'), $this->language->get('text_disabled')) : $this->language->get('text_enabled'),
+					'status'      => $extension == 'xml_' ? sprintf($this->language->get('highlight'), $this->language->get('text_disabled')) : $this->language->get('text_enabled'),
 					'delete'      => $this->url->link('module/vqmod_manager/vqmod_delete', 'token=' . $this->session->data['token'] . '&vqmod=' . basename($vqmod_script), 'SSL'),
 					'action'      => $action,
 					'invalid_xml' => $invalid_xml
@@ -164,17 +168,16 @@ class ControllerModuleVQModManager extends Controller {
 		if (is_file($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
 			$this->data['tab_error_log'] = sprintf($this->language->get('highlight'), $this->language->get('tab_error_log'));
 
-			// Error if log file is larger than 6MB
 			if (filesize($this->vqmod_log) > 6291456) {
+				// Error if log file is larger than 6MB
 				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), round((filesize($this->vqmod_log) / 1048576), 2));
 				$this->data['log'] = sprintf($this->language->get('error_log_size'), (round((filesize($this->vqmod_log) / 1048576), 2)));
-			// Regular log
 			} else {
+				// Regular log
 				$this->data['log'] = file_get_contents($this->vqmod_log, FILE_USE_INCLUDE_PATH, null);
 			}
-
-		// No log / empty log
 		} else {
+			// No log / empty log
 			$this->data['log'] = '';
 		}
 
@@ -193,15 +196,24 @@ class ControllerModuleVQModManager extends Controller {
 		if ($vqmod_vars) {
 			foreach ($vqmod_vars as $setting => $value) {
 				if ($setting == 'useCache') {
-					$this->data['vqmod_vars']['useCache'] = ($value === true ? $this->language->get('text_enabled') : $this->language->get('text_disabled'));
+					$this->data['vqmod_vars'][] = array(
+						'setting' => $this->language->get('setting_usecache'),
+						'value'   => ($value === true ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+					);
 				}
 
 				if ($setting == 'logging') {
-					$this->data['vqmod_vars']['Error Logging'] = ($value === true ? $this->language->get('text_enabled') : $this->language->get('text_disabled'));
+					$this->data['vqmod_vars'][] = array(
+						'setting' => $this->language->get('setting_logging'),
+						'value'   => ($value === true ? $this->language->get('text_enabled') : $this->language->get('text_disabled'))
+					);
 				}
 
 				if ($setting == 'cacheTime') {
-					$this->data['vqmod_vars']['cacheTime'] = sprintf($this->language->get('text_cachetime'), $value);
+					$this->data['vqmod_vars'][] = array(
+						'setting' => $this->language->get('setting_cachetime'),
+						'value'   => sprintf($this->language->get('text_cachetime'), $value)
+					);
 				}
 			}
 		}
@@ -236,8 +248,6 @@ class ControllerModuleVQModManager extends Controller {
 			} else {
 				$this->session->data['error'] = $this->language->get('error_install');
 			}
-
-			clearstatcache();
 		}
 
 		$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
@@ -260,8 +270,6 @@ class ControllerModuleVQModManager extends Controller {
 			} else {
 				$this->session->data['error'] = $this->language->get('error_uninstall');
 			}
-
-			clearstatcache();
 		}
 
 		$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
@@ -306,7 +314,6 @@ class ControllerModuleVQModManager extends Controller {
 			} else {
 				if ($this->request->files['vqmod_file']['type'] != 'text/xml') {
 					$this->session->data['error'] = $this->language->get('error_filetype');
-
 				} else {
 					libxml_use_internal_errors(true);
 					simplexml_load_file($file);
@@ -314,10 +321,8 @@ class ControllerModuleVQModManager extends Controller {
 					if (libxml_get_errors()) {
 						libxml_clear_errors();
 						$this->session->data['error'] = $this->language->get('error_invalid_xml');
-
 					} elseif (move_uploaded_file($file, $this->vqmod_script_dir . $file_name) === false) {
 						$this->session->data['error'] = $this->language->get('error_move');
-
 					} else {
 						$this->clear_vqcache(true);
 
@@ -361,7 +366,7 @@ class ControllerModuleVQModManager extends Controller {
 		} else {
 			$targets = glob($this->vqmod_script_files, GLOB_BRACE);
 
-			$this->send_zip($targets, 'vqmod_scripts_backup');
+			$this->zip_send($targets, 'vqmod_scripts_backup');
 		}
 	}
 
@@ -374,7 +379,7 @@ class ControllerModuleVQModManager extends Controller {
 		} else {
 			$targets = glob($this->vqcache_files);
 
-			$this->send_zip($targets, 'vqcache_dump');
+			$this->zip_send($targets, 'vqcache_dump');
 		}
 	}
 
@@ -387,10 +392,9 @@ class ControllerModuleVQModManager extends Controller {
 		} elseif (is_file($this->vqmod_log)) {
 			$targets = array($this->vqmod_log);
 
-			$this->send_zip($targets, 'vqmod_log');
+			$this->zip_send($targets, 'vqmod_log');
 		}
 
-		clearstatcache();
 	}
 
 	public function clear_vqcache($return = false) {
@@ -407,8 +411,6 @@ class ControllerModuleVQModManager extends Controller {
 						unlink($file);
 					}
 				}
-
-				clearstatcache();
 			}
 
 			if ($return) {
@@ -439,7 +441,7 @@ class ControllerModuleVQModManager extends Controller {
 		$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
 	}
 
-	private function send_zip($targets, $filename) {
+	private function zip_send($targets, $filename) {
 		$temp = tempnam('tmp', 'zip');
 
 		$zip = new ZipArchive();
@@ -461,12 +463,9 @@ class ControllerModuleVQModManager extends Controller {
 		header('Content-Transfer-Encoding: binary');
 		readfile($temp);
 		unlink($temp);
-		clearstatcache();
 	}
 
 	private function vqmod_installation_check() {
-		clearstatcache();
-
 		// Check SimpleXML for VQMod Manager use
 		if (!function_exists('simplexml_load_file')) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_simplexml');
