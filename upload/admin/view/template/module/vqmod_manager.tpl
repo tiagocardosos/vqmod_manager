@@ -77,12 +77,12 @@
              </select><br />
              <?php } ?>
              <a href="<?php echo $clear_vqcache; ?>" class="button"><span><?php echo $button_clear; ?></span></a>
-             <a href="<?php echo $vqcache_dump; ?>" class="button"><span><?php echo $button_vqcache_dump; ?></span></a>
+             <a href="<?php echo $download_vqcache; ?>" class="button"><span><?php echo $button_vqcache_dump; ?></span></a>
            </td>
          </tr>
          <tr>
            <td><?php echo $entry_backup; ?></td>
-           <td><a href="<?php echo $backup; ?>" class="button"><span><?php echo $button_backup; ?></span></a></td>
+           <td><a href="<?php echo $download_scripts; ?>" class="button"><span><?php echo $button_backup; ?></span></a></td>
          </tr>
          <tr>
            <td><?php echo $entry_vqmod_path; ?></td>

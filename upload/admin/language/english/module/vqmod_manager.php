@@ -24,7 +24,7 @@ $_['entry_author']         = 'Author:'; // Change
 $_['entry_backup']         = 'Backup VQMod Scripts:';
 $_['entry_ext_store']      = 'Latest Version:';
 $_['entry_ext_version']    = 'VQMod Manager Version:';
-$_['entry_forum']          = 'Forum Support Thread:';
+$_['entry_forum']          = 'OpenCart Forum Thread:';
 $_['entry_license']        = 'License:';
 $_['entry_upload']         = 'VQMod Upload:';
 $_['entry_vqcache']        = 'VQMod Cache:';
@@ -79,9 +79,11 @@ $_['error_mod_aborted']     = 'Mod Aborted';
 $_['error_mod_skipped']     = 'Operation Skipped';
 
 // VQMod Variable Settings
+$_['setting_cachetime']     = 'cacheTime:<br /><span="help">Depricated as of VQMod 2.2.0</span>';
+$_['setting_logfolder']     = 'Log Folder:<br /><span="help">VQMod 2.2.0 and later</span>';
 $_['setting_logging']       = 'Error Logging:';
-$_['setting_usecache']      = 'useCache:';
-$_['setting_cachetime']     = 'cacheTime:';
+$_['setting_modcache']      = 'modCache:';
+$_['setting_usecache']      = 'useCache:<br /><span="help">Depricated as of VQMod 2.1.7</span>';
 
 // Success
 $_['success_clear_vqcache'] = 'Success: VQMod cache cleared!';

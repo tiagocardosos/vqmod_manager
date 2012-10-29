@@ -5,6 +5,7 @@ class ControllerModuleVQModManager extends Controller {
 	 * @todo  Invalid XML handling
 	 * @todo  Check for unused language text
 	 * @todo  VQMod script rename
+	 * @todo  Disable vqmod_opencart.xml uninstall
 	 */
 	private $error = array();
 
@@ -17,7 +18,9 @@ class ControllerModuleVQModManager extends Controller {
 		$this->vqmod_script_files = substr_replace(DIR_SYSTEM, '/vqmod/xml/*.{xml,xml_}', -8);
 		$this->vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
 		$this->vqcache_files = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/vq*', -8);
-		$this->vqmod_log = substr_replace(DIR_SYSTEM, '/vqmod/vqmod.log', -8);
+		$this->vqmod_log = substr_replace(DIR_SYSTEM, '/vqmod/vqmod.log', -8); // Depricated VQMod 2.2.0
+		$this->vqmod_log_folder = substr_replace(DIR_SYSTEM, '/vqmod/logs/', -8);
+		$this->vqmod_logs = substr_replace(DIR_SYSTEM, '/vqmod/logs/*.log', -8);
 		$this->vqmod_opencart_script = substr_replace(DIR_SYSTEM, '/vqmod/xml/vqmod_opencart.xml', -8);
 
 		clearstatcache();
@@ -81,12 +84,12 @@ class ControllerModuleVQModManager extends Controller {
 
 		// Action Buttons
 		$this->data['action'] = $this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL');
-		$this->data['backup'] = $this->url->link('module/vqmod_manager/vqmod_backup', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['clear_log'] = $this->url->link('module/vqmod_manager/clear_log', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['clear_vqcache'] = $this->url->link('module/vqmod_manager/clear_vqcache', 'token=' . $this->session->data['token'], 'SSL');
-		$this->data['download_log'] = $this->url->link('module/vqmod_manager/vqmod_log_download', 'token=' . $this->session->data['token'], 'SSL');
-		$this->data['vqcache_dump'] = $this->url->link('module/vqmod_manager/vqcache_dump', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['download_log'] = $this->url->link('module/vqmod_manager/download_log', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['download_scripts'] = $this->url->link('module/vqmod_manager/download_vqmod_scripts', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['download_vqcache'] = $this->url->link('module/vqmod_manager/download_vqcache', 'token=' . $this->session->data['token'], 'SSL');
 
 		// Check that VQMod is properly installed in store
 		if ($this->vqmod_installation_check()) {
@@ -165,20 +168,38 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// VQMod Error Log
-		if (is_file($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
+		$this->data['log'] = '';
+
+		if (is_dir($this->vqmod_log_folder)) {
+			// VQMod 2.2.0 logs
+			$vqmod_logs = glob($this->vqmod_logs);
+			$vqmod_logs_size = 0;
+
+			foreach ($vqmod_logs as $vqmod_log) {
+				$vqmod_logs_size += filesize($vqmod_log);
+			}
+
+			// Error if log file is larger than 6MB
+			if ($vqmod_logs_size > 6291456) {
+				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), round(($vqmod_logs_size / 1048576), 2));
+				$this->data['log'] = sprintf($this->language->get('error_log_size'), round(($vqmods_log_size / 1048576), 2));
+			} else {
+				foreach ($vqmod_logs as $vqmod_log) {
+					$this->data['log'] .= file_get_contents($vqmod_log, FILE_USE_INCLUDE_PATH, null);
+				}
+			}
+		} elseif (is_file($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
+			// VQMod 2.1.7 and earlier log
 			$this->data['tab_error_log'] = sprintf($this->language->get('highlight'), $this->language->get('tab_error_log'));
 
 			if (filesize($this->vqmod_log) > 6291456) {
 				// Error if log file is larger than 6MB
 				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), round((filesize($this->vqmod_log) / 1048576), 2));
-				$this->data['log'] = sprintf($this->language->get('error_log_size'), (round((filesize($this->vqmod_log) / 1048576), 2)));
+				$this->data['log'] = sprintf($this->language->get('error_log_size'), round((filesize($this->vqmod_log) / 1048576), 2));
 			} else {
 				// Regular log
 				$this->data['log'] = file_get_contents($this->vqmod_log, FILE_USE_INCLUDE_PATH, null);
 			}
-		} else {
-			// No log / empty log
-			$this->data['log'] = '';
 		}
 
 		// VQMod Path
@@ -261,7 +282,9 @@ class ControllerModuleVQModManager extends Controller {
 		} else {
 			$vqmod_script = $this->request->get['vqmod'];
 
-			if (is_file($this->vqmod_script_dir . $vqmod_script . '.xml')) {
+			if ($vqmod_script == 'vqmod_opencart') {
+				$this->session->data['error'] = $this->language->get('error_vqmod_opencart');
+			} elseif (is_file($this->vqmod_script_dir . $vqmod_script . '.xml')) {
 				rename($this->vqmod_script_dir . $vqmod_script . '.xml', $this->vqmod_script_dir . $vqmod_script . '.xml_');
 
 				$this->clear_vqcache(true);
@@ -319,8 +342,8 @@ class ControllerModuleVQModManager extends Controller {
 					simplexml_load_file($file);
 
 					if (libxml_get_errors()) {
-						libxml_clear_errors();
 						$this->session->data['error'] = $this->language->get('error_invalid_xml');
+						libxml_clear_errors();
 					} elseif (move_uploaded_file($file, $this->vqmod_script_dir . $file_name) === false) {
 						$this->session->data['error'] = $this->language->get('error_move');
 					} else {
@@ -355,46 +378,6 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
-	}
-
-	public function vqmod_backup() {
-		$this->load->language('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$targets = glob($this->vqmod_script_files, GLOB_BRACE);
-
-			$this->zip_send($targets, 'vqmod_scripts_backup');
-		}
-	}
-
-	public function vqcache_dump() {
-		$this->load->language('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$targets = glob($this->vqcache_files);
-
-			$this->zip_send($targets, 'vqcache_dump');
-		}
-	}
-
-	public function vqmod_log_download() {
-		$this->load->language('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
-		} elseif (is_file($this->vqmod_log)) {
-			$targets = array($this->vqmod_log);
-
-			$this->zip_send($targets, 'vqmod_log');
-		}
-
 	}
 
 	public function clear_vqcache($return = false) {
@@ -439,6 +422,46 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
+	}
+
+	public function download_vqmod_scripts() {
+		$this->load->language('module/vqmod_manager');
+
+		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
+			$this->session->data['error'] = $this->language->get('error_permission');
+			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {
+			$targets = glob($this->vqmod_script_files, GLOB_BRACE);
+
+			$this->zip_send($targets, 'vqmod_scripts_backup');
+		}
+	}
+
+	public function download_vqcache() {
+		$this->load->language('module/vqmod_manager');
+
+		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
+			$this->session->data['error'] = $this->language->get('error_permission');
+			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {
+			$targets = glob($this->vqcache_files);
+
+			$this->zip_send($targets, 'vqcache_dump');
+		}
+	}
+
+	public function download_log() {
+		$this->load->language('module/vqmod_manager');
+
+		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
+			$this->session->data['error'] = $this->language->get('error_permission');
+			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
+		} elseif (is_file($this->vqmod_log)) {
+			$targets = array($this->vqmod_log);
+
+			$this->zip_send($targets, 'vqmod_log');
+		}
+
 	}
 
 	private function zip_send($targets, $filename) {
