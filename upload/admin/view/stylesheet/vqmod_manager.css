@@ -1,4 +1,4 @@
-hr  {
+hr {
 	color: #ddd;
 	background-color: #ddd;
 	height: 1px;
@@ -36,11 +36,18 @@ a.about:hover {
 a.action-link:hover {
 	text-decoration: none;
 }
-.description  {
+.description {
 	font-size: 0.9em;
 	margin: 3px 0px;
 }
-.highlight  {
+.help {
+	color: #666;
+	font-size: 11px;
+	font-weight: normal;
+	font-family: Verdana, Geneva, sans-serif;
+	display: block;
+}
+.highlight {
 	color: #ff0000;
 }
 .right {
@@ -78,7 +85,7 @@ a.action-link:hover {
 	text-align: center;
 	padding: 7px;
 }
-.row-odd  td{
+.row-odd td{
 	background-color: #f4f4f8;
 }
 .row-even td {

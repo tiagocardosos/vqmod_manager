@@ -107,7 +107,7 @@ class ControllerModuleVQModManager extends Controller {
 			$this->data['vqmod_installation_error'] = '';
 		}
 
-		// Detect mods
+		// Detect scripts
 		$vqmod_scripts = glob($this->vqmod_script_files, GLOB_BRACE);
 
 		$this->data['vqmods'] = array();
@@ -171,7 +171,7 @@ class ControllerModuleVQModManager extends Controller {
 		$this->data['log'] = '';
 
 		if (is_dir($this->vqmod_log_folder)) {
-			// VQMod 2.2.0 logs
+			// VQMod 2.2.0 and later logs
 			$vqmod_logs = glob($this->vqmod_logs);
 			$vqmod_logs_size = 0;
 
@@ -182,13 +182,14 @@ class ControllerModuleVQModManager extends Controller {
 			// Error if log file is larger than 6MB
 			if ($vqmod_logs_size > 6291456) {
 				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), round(($vqmod_logs_size / 1048576), 2));
-				$this->data['log'] = sprintf($this->language->get('error_log_size'), round(($vqmods_log_size / 1048576), 2));
+				$this->data['log'] = sprintf($this->language->get('error_log_size'), round(($vqmod_logs_size / 1048576), 2));
 			} else {
 				foreach ($vqmod_logs as $vqmod_log) {
+					$this->data['log'] .= str_pad(basename($vqmod_log), 70, '*', STR_PAD_BOTH) . "\n";
 					$this->data['log'] .= file_get_contents($vqmod_log, FILE_USE_INCLUDE_PATH, null);
 				}
 			}
-		} elseif (is_file($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
+		} elseif (is_file($this->vqmod_log)) {
 			// VQMod 2.1.7 and earlier log
 			$this->data['tab_error_log'] = sprintf($this->language->get('highlight'), $this->language->get('tab_error_log'));
 
@@ -456,12 +457,17 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
+		} elseif (is_dir($this->vqmod_log_folder)) {
+			// VQMod 2.2.0 and later
+			$targets = glob($this->vqmod_logs);
+
+			$this->zip_send($targets, 'vqmod_logs');
 		} elseif (is_file($this->vqmod_log)) {
+			// VQMod 2.1.7 and earlier
 			$targets = array($this->vqmod_log);
 
 			$this->zip_send($targets, 'vqmod_log');
 		}
-
 	}
 
 	private function zip_send($targets, $filename) {

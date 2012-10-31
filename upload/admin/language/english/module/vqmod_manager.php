@@ -79,11 +79,11 @@ $_['error_mod_aborted']     = 'Mod Aborted';
 $_['error_mod_skipped']     = 'Operation Skipped';
 
 // VQMod Variable Settings
-$_['setting_cachetime']     = 'cacheTime:<br /><span="help">Depricated as of VQMod 2.2.0</span>';
-$_['setting_logfolder']     = 'Log Folder:<br /><span="help">VQMod 2.2.0 and later</span>';
+$_['setting_cachetime']     = 'cacheTime:<br /><span class="help">Depricated as of VQMod 2.2.0</span>';
+$_['setting_logfolder']     = 'Log Folder:<br /><span class="help">VQMod 2.2.0 and later</span>';
 $_['setting_logging']       = 'Error Logging:';
 $_['setting_modcache']      = 'modCache:';
-$_['setting_usecache']      = 'useCache:<br /><span="help">Depricated as of VQMod 2.1.7</span>';
+$_['setting_usecache']      = 'useCache:<br /><span class="help">Depricated as of VQMod 2.1.7</span>';
 
 // Success
 $_['success_clear_vqcache'] = 'Success: VQMod cache cleared!';
