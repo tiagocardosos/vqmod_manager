@@ -5,7 +5,6 @@ class ControllerModuleVQModManager extends Controller {
 	 * @todo  Invalid XML handling
 	 * @todo  Check for unused language text
 	 * @todo  VQMod script rename
-	 * @todo  Disable vqmod_opencart.xml uninstall
 	 */
 	private $error = array();
 
