@@ -18,7 +18,7 @@ class ControllerModuleVQModManager extends Controller {
 		$this->vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
 		$this->vqcache_files = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/vq*', -8);
 		$this->vqmod_log = substr_replace(DIR_SYSTEM, '/vqmod/vqmod.log', -8); // Depricated VQMod 2.2.0
-		$this->vqmod_logs_folder = substr_replace(DIR_SYSTEM, '/vqmod/logs/', -8);
+		$this->vqmod_logs_dir = substr_replace(DIR_SYSTEM, '/vqmod/logs/', -8);
 		$this->vqmod_logs = substr_replace(DIR_SYSTEM, '/vqmod/logs/*.log', -8);
 		$this->vqmod_modcache = substr_replace(DIR_SYSTEM, '/vqmod/mods.cache', -8);
 		$this->vqmod_opencart_script = substr_replace(DIR_SYSTEM, '/vqmod/xml/vqmod_opencart.xml', -8);
@@ -170,7 +170,7 @@ class ControllerModuleVQModManager extends Controller {
 		// VQMod Error Log
 		$this->data['log'] = '';
 
-		if (is_dir($this->vqmod_logs_folder)) {
+		if (is_dir($this->vqmod_logs_dir)) {
 			// VQMod 2.2.0 and later logs
 			$vqmod_logs = glob($this->vqmod_logs);
 			$vqmod_logs_size = 0;
@@ -179,7 +179,7 @@ class ControllerModuleVQModManager extends Controller {
 				$vqmod_logs_size += filesize($vqmod_log);
 			}
 
-			// Error if log file is larger than 6MB
+			// Error if log files are larger than 6MB combined
 			if ($vqmod_logs_size > 6291456) {
 				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), round(($vqmod_logs_size / 1048576), 2));
 				$this->data['log'] = sprintf($this->language->get('error_log_size'), round(($vqmod_logs_size / 1048576), 2));
@@ -191,8 +191,6 @@ class ControllerModuleVQModManager extends Controller {
 			}
 		} elseif (is_file($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
 			// VQMod 2.1.7 and earlier log
-			$this->data['tab_error_log'] = sprintf($this->language->get('highlight'), $this->language->get('tab_error_log'));
-
 			if (filesize($this->vqmod_log) > 6291456) {
 				// Error if log file is larger than 6MB
 				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), round((filesize($this->vqmod_log) / 1048576), 2));
@@ -201,6 +199,11 @@ class ControllerModuleVQModManager extends Controller {
 				// Regular log
 				$this->data['log'] = file_get_contents($this->vqmod_log, FILE_USE_INCLUDE_PATH, null);
 			}
+		}
+
+		if ($this->data['log']) {
+			// Highlight Error Log tab
+			$this->data['tab_error_log'] = sprintf($this->language->get('highlight'), $this->language->get('tab_error_log'));
 		}
 
 		// VQMod Path
@@ -417,13 +420,23 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
-			$file = $this->vqmod_log;
+			if (is_dir($this->vqmod_logs_dir)) {
+				// VQMod 2.2.0 and later
+				$files = glob($this->vqmod_logs);
 
-			$handle = fopen($file, 'w+');
+				foreach ($files as $file) {
+					unlink($file);
+				}
+			} else {
+				// VQMod 2.1.7 and earlier
+				$file = $this->vqmod_log;
 
-			fclose($handle);
+				$handle = fopen($file, 'w+');
 
-			$this->session->data['success'] = $this->language->get('success_clear_log');
+				fclose($handle);
+
+				$this->session->data['success'] = $this->language->get('success_clear_log');
+			}
 		}
 
 		$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
@@ -461,7 +474,7 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
-		} elseif (is_dir($this->vqmod_logs_folder)) {
+		} elseif (is_dir($this->vqmod_logs_dir)) {
 			// VQMod 2.2.0 and later
 			$targets = glob($this->vqmod_logs);
 
