@@ -21,6 +21,7 @@ class ControllerModuleVQModManager extends Controller {
 		$this->vqmod_log = substr_replace(DIR_SYSTEM, '/vqmod/vqmod.log', -8); // Depricated VQMod 2.2.0
 		$this->vqmod_logs_folder = substr_replace(DIR_SYSTEM, '/vqmod/logs/', -8);
 		$this->vqmod_logs = substr_replace(DIR_SYSTEM, '/vqmod/logs/*.log', -8);
+		$this->vqmod_modcache = substr_replace(DIR_SYSTEM, '/vqmod/mods.cache', -8);
 		$this->vqmod_opencart_script = substr_replace(DIR_SYSTEM, '/vqmod/xml/vqmod_opencart.xml', -8);
 
 		clearstatcache();
@@ -189,7 +190,7 @@ class ControllerModuleVQModManager extends Controller {
 					$this->data['log'] .= file_get_contents($vqmod_log, FILE_USE_INCLUDE_PATH, null);
 				}
 			}
-		} elseif (is_file($this->vqmod_log)) {
+		} elseif (is_file($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
 			// VQMod 2.1.7 and earlier log
 			$this->data['tab_error_log'] = sprintf($this->language->get('highlight'), $this->language->get('tab_error_log'));
 
@@ -395,6 +396,10 @@ class ControllerModuleVQModManager extends Controller {
 						unlink($file);
 					}
 				}
+			}
+
+			if (is_file($this->vqmod_modcache)) {
+				unlink($this->vqmod_modcache);
 			}
 
 			if ($return) {
