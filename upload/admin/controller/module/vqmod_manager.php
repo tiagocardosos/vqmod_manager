@@ -19,7 +19,7 @@ class ControllerModuleVQModManager extends Controller {
 		$this->vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
 		$this->vqcache_files = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/vq*', -8);
 		$this->vqmod_log = substr_replace(DIR_SYSTEM, '/vqmod/vqmod.log', -8); // Depricated VQMod 2.2.0
-		$this->vqmod_log_folder = substr_replace(DIR_SYSTEM, '/vqmod/logs/', -8);
+		$this->vqmod_logs_folder = substr_replace(DIR_SYSTEM, '/vqmod/logs/', -8);
 		$this->vqmod_logs = substr_replace(DIR_SYSTEM, '/vqmod/logs/*.log', -8);
 		$this->vqmod_opencart_script = substr_replace(DIR_SYSTEM, '/vqmod/xml/vqmod_opencart.xml', -8);
 
@@ -170,7 +170,7 @@ class ControllerModuleVQModManager extends Controller {
 		// VQMod Error Log
 		$this->data['log'] = '';
 
-		if (is_dir($this->vqmod_log_folder)) {
+		if (is_dir($this->vqmod_logs_folder)) {
 			// VQMod 2.2.0 and later logs
 			$vqmod_logs = glob($this->vqmod_logs);
 			$vqmod_logs_size = 0;
@@ -457,7 +457,7 @@ class ControllerModuleVQModManager extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
-		} elseif (is_dir($this->vqmod_log_folder)) {
+		} elseif (is_dir($this->vqmod_logs_folder)) {
 			// VQMod 2.2.0 and later
 			$targets = glob($this->vqmod_logs);
 

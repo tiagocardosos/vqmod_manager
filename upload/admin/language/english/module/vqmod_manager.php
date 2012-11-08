@@ -26,7 +26,7 @@ $_['entry_ext_store']      = 'Latest Version:';
 $_['entry_ext_version']    = 'VQMod Manager Version:';
 $_['entry_forum']          = 'OpenCart Forum Thread:';
 $_['entry_license']        = 'License:';
-$_['entry_upload']         = 'VQMod Upload:';
+$_['entry_upload']         = 'VQMod Script Upload:';
 $_['entry_vqcache']        = 'VQMod Cache:';
 $_['entry_vqmod_path']     = 'VQMod Path:';
 $_['entry_website']        = 'Website:';
@@ -119,7 +119,7 @@ $_['text_vqcache_help']     = 'Some system files will always be present even aft
 // Version
 $_['vqmod_manager_author']  = 'rph';
 $_['vqmod_manager_license'] = 'Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)';
-$_['vqmod_manager_version'] = '2.0-alpha';
+$_['vqmod_manager_version'] = '2.0-beta';
 
 // Javascript Warnings
 $_['warning_required_delete']    = 'WARNING: Deleting \\\'vqmod_opencart.xml\\\' will cause VQMod to STOP WORKING! Continue?';
