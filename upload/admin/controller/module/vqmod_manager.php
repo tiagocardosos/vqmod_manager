@@ -584,7 +584,7 @@ class ControllerModuleVQModManager extends Controller {
 
 		// Check VQMod Script Writing
 		if (!is_writable($this->vqmod_script_dir)) {
-			$this->session->data['vqmod_installation_error'] = $this->language->get('error_script_write');
+			$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_script_write');
 			return false;
 		}
 
