@@ -175,7 +175,7 @@ class ControllerModuleVQModManager extends Controller {
 			$vqmod_logs = glob($this->vqmod_logs);
 			$vqmod_logs_size = 0;
 
-			if (is_array($vqmod_logs) && !empty($vqmod_logs)) {
+			if (!empty($vqmod_logs)) {
 				foreach ($vqmod_logs as $vqmod_log) {
 					$vqmod_logs_size += filesize($vqmod_log);
 				}
