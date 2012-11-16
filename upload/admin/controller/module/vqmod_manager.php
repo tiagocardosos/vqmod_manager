@@ -170,7 +170,7 @@ class ControllerModuleVQModManager extends Controller {
 		// VQMod Error Log
 		$this->data['log'] = '';
 
-		if (is_dir($this->vqmod_logs_dir)) {
+		if (is_dir($this->vqmod_logs_dir) && is_readable($this->vqmod_logs_dir)) {
 			// VQMod 2.2.0 and later logs
 			$vqmod_logs = glob($this->vqmod_logs);
 			$vqmod_logs_size = 0;
