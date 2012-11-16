@@ -5,6 +5,7 @@ class ControllerModuleVQModManager extends Controller {
 	 * @todo  Invalid XML handling
 	 * @todo  Check for unused language text
 	 * @todo  VQMod script rename
+	 * @todo  Better handling of VQMod logs
 	 */
 	private $error = array();
 
