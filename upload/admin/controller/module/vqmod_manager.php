@@ -175,18 +175,20 @@ class ControllerModuleVQModManager extends Controller {
 			$vqmod_logs = glob($this->vqmod_logs);
 			$vqmod_logs_size = 0;
 
-			foreach ($vqmod_logs as $vqmod_log) {
-				$vqmod_logs_size += filesize($vqmod_log);
-			}
-
-			// Error if log files are larger than 6MB combined
-			if ($vqmod_logs_size > 6291456) {
-				$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), round(($vqmod_logs_size / 1048576), 2));
-				$this->data['log'] = sprintf($this->language->get('error_log_size'), round(($vqmod_logs_size / 1048576), 2));
-			} else {
+			if (is_array($vqmod_logs) && !empty($vqmod_logs)) {
 				foreach ($vqmod_logs as $vqmod_log) {
-					$this->data['log'] .= str_pad(basename($vqmod_log), 70, '*', STR_PAD_BOTH) . "\n";
-					$this->data['log'] .= file_get_contents($vqmod_log, FILE_USE_INCLUDE_PATH, null);
+					$vqmod_logs_size += filesize($vqmod_log);
+				}
+
+				// Error if log files are larger than 6MB combined
+				if ($vqmod_logs_size > 6291456) {
+					$this->data['error_warning'] = sprintf($this->language->get('error_log_size'), round(($vqmod_logs_size / 1048576), 2));
+					$this->data['log'] = sprintf($this->language->get('error_log_size'), round(($vqmod_logs_size / 1048576), 2));
+				} else {
+					foreach ($vqmod_logs as $vqmod_log) {
+						$this->data['log'] .= str_pad(basename($vqmod_log), 70, '*', STR_PAD_BOTH) . "\n";
+						$this->data['log'] .= file_get_contents($vqmod_log, FILE_USE_INCLUDE_PATH, null);
+					}
 				}
 			}
 		} elseif (is_file($this->vqmod_log) && filesize($this->vqmod_log) > 0) {
