@@ -6,6 +6,10 @@ class ControllerModuleVQModManager extends Controller {
 	 * @todo  Check for unused language text
 	 * @todo  VQMod script rename
 	 * @todo  Better handling of VQMod logs
+	 * @todo  Break VQMod installation errors into more generic parts
+	 *          -Missing Files (re-upload)
+	 *          -Permissions (chmod)
+	 *          -Version (upgrade)
 	 */
 	private $error = array();
 
