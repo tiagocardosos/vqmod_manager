@@ -601,6 +601,23 @@ class ControllerModuleVQModManager extends Controller {
 			return false;
 		}
 
+		// Check if vqcache files from vqmod_opencart.xml have been generated
+		$vqcache_files = array(
+			'vq2-system_engine_controller.php',
+			'vq2-system_engine_front.php',
+			'vq2-system_engine_loader.php',
+			'vq2-system_library_language.php',
+			'vq2-system_library_template.php',
+			'vq2-system_startup.php'
+		);
+
+		foreach ($vqcache_files as $vqcache_file) {
+			if (!file_exists($this->vqcache_dir . $vqcache_file)) {
+				$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqcache_files_missing');
+				return false;
+			}
+		}
+
 		// Check ZipArchive for VQMod Manager use
 		if (!class_exists('ZipArchive')) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_ziparchive');
