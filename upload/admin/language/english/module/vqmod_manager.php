@@ -66,14 +66,14 @@ $_['error_vqcache_write']              = 'Unabled to write to "/vqmod/vqcache" d
 $_['error_vqcache_files_missing']      = 'VQMod does not appear to be properly generating vqcache files!';
 $_['error_vqmod_core']                 = 'Required file "vqmod.php" is missing!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqmod_dir']                  = 'The "/vqmod" directory does not appear to exist!';
-$_['error_vqmod_install_link']         = 'VQMod has does not appear to have been integrated with OpenCart! You can run the VQMod installer at <a href="%1$s">%1$s</a>.';
-$_['error_vqmod_opencart_integration'] = 'VQMod has does not appear to have been integrated with OpenCart!';
+$_['error_vqmod_install_link']         = 'VQMod does not appear to have been integrated with OpenCart! You can run the VQMod installer at <a href="%1$s">%1$s</a>.';
+$_['error_vqmod_opencart_integration'] = 'VQMod does not appear to have been integrated with OpenCart!  Please upload the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqmod_script_dir']           = '"/vqmod/xml" directory does not appear to exist!';
 $_['error_vqmod_script_write']         = 'Unable to write to "/vqmod/xml" directory!  Set permissions to 755 or 777 and try again.';
 
 // VQMod Manager Dependency Errors
-$_['error_simplexml']       = 'SimpleXML must be installed for VQMod Manager to work properly!';
-$_['error_ziparchive']      = 'ZipArchive must be installed for VQMod Manager to work properly!';
+$_['error_simplexml']       = '<a href="http://php.net/manual/en/book.simplexml.php">SimpleXML</a> must be installed for VQMod Manager to work properly!';
+$_['error_ziparchive']      = '<a href="http://php.net/manual/en/class.ziparchive.php">ZipArchive</a> must be installed for VQMod Manager to work properly!';
 
 // VQMod Log Errors
 $_['error_mod_aborted']     = 'Mod Aborted';
@@ -120,7 +120,7 @@ $_['text_vqcache_help']     = 'Some system files will always be present even aft
 // Version
 $_['vqmod_manager_author']  = 'rph';
 $_['vqmod_manager_license'] = 'Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)';
-$_['vqmod_manager_version'] = '2.0-beta.5';
+$_['vqmod_manager_version'] = '2.0-beta.6';
 
 // Javascript Warnings
 $_['warning_required_delete']    = 'WARNING: Deleting \\\'vqmod_opencart.xml\\\' will cause VQMod to STOP WORKING! Continue?';
