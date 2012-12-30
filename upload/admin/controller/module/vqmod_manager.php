@@ -449,20 +449,24 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	private function list_vqmod_scripts() {
-		$vqmod_scripts = array();
+		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
+			$this->session->data['error'] = $this->language->get('error_permission');
+		} else {
+			$vqmod_scripts = array();
 
-		$active_vqmod_scripts = glob($this->vqmod_script_dir . '*.xml');
-		$disabled_vqmod_scripts = glob($this->vqmod_script_dir . '*.xml_');
+			$active_vqmod_scripts = glob($this->vqmod_script_dir . '*.xml');
+			$disabled_vqmod_scripts = glob($this->vqmod_script_dir . '*.xml_');
 
-		if (!empty($active_vqmod_scripts)) {
-			$vqmod_scripts = array_merge($vqmod_scripts, $active_vqmod_scripts);
+			if (!empty($active_vqmod_scripts)) {
+				$vqmod_scripts = array_merge($vqmod_scripts, $active_vqmod_scripts);
+			}
+
+			if (!empty($disabled_vqmod_scripts)) {
+				$vqmod_scripts = array_merge($vqmod_scripts, $disabled_vqmod_scripts);
+			}
+
+			return $vqmod_scripts;
 		}
-
-		if (!empty($disabled_vqmod_scripts)) {
-			$vqmod_scripts = array_merge($vqmod_scripts, $disabled_vqmod_scripts);
-		}
-
-		return $vqmod_scripts;
 	}
 
 	public function download_vqmod_scripts() {
