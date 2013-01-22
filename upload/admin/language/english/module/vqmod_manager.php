@@ -120,7 +120,7 @@ $_['text_vqcache_help']     = 'Some system files will always be present even aft
 // Version
 $_['vqmod_manager_author']  = 'rph';
 $_['vqmod_manager_license'] = 'Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)';
-$_['vqmod_manager_version'] = '2.0-beta.6';
+$_['vqmod_manager_version'] = '2.0-beta.7';
 
 // Javascript Warnings
 $_['warning_required_delete']    = 'WARNING: Deleting \\\'vqmod_opencart.xml\\\' will cause VQMod to STOP WORKING! Continue?';
