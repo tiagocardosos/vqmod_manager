@@ -31,7 +31,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function index() {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// Language
-		$this->data = array_merge($this->data, $this->load->language('module/vqmod_manager'));
+		$this->data = array_merge($this->data, $this->language->load('module/vqmod_manager'));
 
 		// Warning
 		if (isset($this->session->data['error'])) {
@@ -263,7 +263,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function vqmod_install() {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -285,7 +285,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function vqmod_uninstall() {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -309,7 +309,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function vqmod_upload() {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -369,7 +369,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function vqmod_delete() {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -391,7 +391,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function clear_vqcache($return = false) {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -421,7 +421,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function clear_log() {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -470,7 +470,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function download_vqmod_scripts() {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -483,7 +483,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function download_vqcache() {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -496,7 +496,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function download_log() {
-		$this->load->language('module/vqmod_manager');
+		$this->language->load('module/vqmod_manager');
 
 		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
