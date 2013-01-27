@@ -40,7 +40,7 @@ class ControllerModuleVQModManager extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->userPermission()) {
 			// Upload VQMod
 			if (isset($this->request->post['upload'])) {
 				$this->vqmod_upload();
@@ -114,7 +114,7 @@ class ControllerModuleVQModManager extends Controller {
 		$this->data['download_scripts'] = $this->url->link('module/vqmod_manager/download_vqmod_scripts', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['download_vqcache'] = $this->url->link('module/vqmod_manager/download_vqcache', 'token=' . $this->session->data['token'], 'SSL');
 
-		// Check ZipArchive for downloads
+		// Check ZipArchive for use with downloads
 		if (class_exists('ZipArchive')) {
 			$this->data['ziparchive'] = true;
 		} else {

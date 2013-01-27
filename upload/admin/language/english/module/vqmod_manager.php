@@ -38,7 +38,7 @@ $_['highlight']            = '<span class="highlight">%s</span>';
 $_['error_delete']         = 'Warning: Unable to delete VQMod script!';
 $_['error_filetype']       = 'Warning: Invalid filetype!  Please only upload .xml files.';
 $_['error_install']        = 'Warning: Unable to install VQMod script!';
-$_['error_invalid_xml']    = 'Warning: VQMod script XML syntax is not valid!  Please contact the author for support.';
+$_['error_invalid_xml']    = 'Warning: VQMod script XML syntax is invalid!  Please contact the author for support.';
 $_['error_log_size']       = 'Warning: Your VQMod error log is %sMBs.  The limit for VQMod Manager is 6MB.  You can download the error log by FTP or by clicking the \'Download Log\' button in the Error Log tab.  Otherwise consider clearing it.';
 $_['error_log_download']   = 'Warning: No error logs available for download!';
 $_['error_moddedfile']     = 'Warning: VQMod script attempts to mod file \'%s\' which does not appear to exist!';
