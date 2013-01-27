@@ -69,20 +69,24 @@
          <tr>
            <td><?php echo $entry_vqcache; ?><br /><span class="help"><?php echo $text_vqcache_help; ?></span></td>
            <td>
-             <?php if ($vqcache) { ?>
              <select multiple="multiple" size="7" id="vqcache">
                <?php foreach ($vqcache as $vqcache_file) { ?>
                 <option><?php echo $vqcache_file; ?></option>
                <?php } ?>
              </select><br />
-             <?php } ?>
              <a href="<?php echo $clear_vqcache; ?>" class="button"><span><?php echo $button_clear; ?></span></a>
+             <?php if ($ziparchive) { ?>
              <a href="<?php echo $download_vqcache; ?>" class="button"><span><?php echo $button_vqcache_dump; ?></span></a>
+             <?php } ?>
            </td>
          </tr>
          <tr>
            <td><?php echo $entry_backup; ?></td>
+           <?php if ($ziparchive) { ?>
            <td><a href="<?php echo $download_scripts; ?>" class="button"><span><?php echo $button_backup; ?></span></a></td>
+           <?php } else { ?>
+           <td><?php echo $error_ziparchive; ?></td>
+           <?php } ?>
          </tr>
          <tr>
            <td><?php echo $entry_vqmod_path; ?></td>
@@ -102,7 +106,7 @@
       <table class="form">
         <tr>
           <td><textarea rows="20" cols="160" id="error-log"><?php echo $log; ?></textarea>
-          <div class="right"><a href="<?php echo $download_log; ?>" class="button"><span><?php echo $button_download_log; ?></span></a> <a href="<?php echo $clear_log; ?>" class="button"><span><?php echo $button_clear; ?></span></a></div></td>
+          <div class="right"><?php if ($ziparchive) { ?><a href="<?php echo $download_log; ?>" class="button"><span><?php echo $button_download_log; ?></span></a><?php } ?> <a href="<?php echo $clear_log; ?>" class="button"><span><?php echo $button_clear; ?></span></a></div></td>
         </tr>
       </table>
     </div>
@@ -118,19 +122,19 @@
         </tr>
         <tr>
           <td><?php echo $entry_website; ?></td>
-          <td><a class="about" onclick="window.open('http://opencarthelp.com');">http://opencarthelp.com</a></td>
+          <td><a class="about" href="http://opencarthelp.com" target="_blank">http://opencarthelp.com</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_ext_store; ?></td>
-          <td><a class="about" onclick="window.open('http://www.opencart.com/index.php?route=extension/extension/info&amp;extension_id=2969&amp;filter_username=rph');">http://www.opencart.com/index.php?route=extension/extension/info&amp;extension_id=2969</a></td>
+          <td><a class="about" href="http://www.opencart.com/index.php?route=extension/extension/info&amp;extension_id=2969&amp;filter_username=rph" target="_blank">http://www.opencart.com/index.php?route=extension/extension/info&amp;extension_id=2969</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_forum; ?></td>
-          <td><a class="about" onclick="window.open('http://forum.opencart.com/viewtopic.php?t=36235');">http://forum.opencart.com/viewtopic.php?t=36235</a></td>
+          <td><a class="about" href="http://forum.opencart.com/viewtopic.php?t=36235" target="_blank">http://forum.opencart.com/viewtopic.php?t=36235</a></td>
         </tr>
         <tr>
           <td><?php echo $entry_license; ?></td>
-          <td><a class="about" onclick="window.open('http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode');"><?php echo $vqmod_manager_license; ?></a></td>
+          <td><a class="about" href="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode" target="_blank"><?php echo $vqmod_manager_license; ?></a></td>
         </tr>
       </table>
     </div>

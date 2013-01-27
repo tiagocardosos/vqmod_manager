@@ -1,6 +1,8 @@
 <?php
 class ControllerModuleVQModManager extends Controller {
 	/** 
+	 * @todo  VQMod 2.3.0
+	 * @todo  Use VQMod vars for paths instead of hardcoding
 	 * @todo  VQMod installation check
 	 * @todo  Invalid XML handling
 	 * @todo  Check for unused language text
@@ -17,6 +19,7 @@ class ControllerModuleVQModManager extends Controller {
 		parent::__construct($registry);
 
 		// Paths and Files
+		$this->base_dir = substr_replace(DIR_SYSTEM, '/', -8);
 		$this->vqmod_dir = substr_replace(DIR_SYSTEM, '/vqmod/', -8);
 		$this->vqmod_script_dir = substr_replace(DIR_SYSTEM, '/vqmod/xml/', -8);
 		$this->vqcache_dir = substr_replace(DIR_SYSTEM, '/vqmod/vqcache/', -8);
@@ -46,6 +49,22 @@ class ControllerModuleVQModManager extends Controller {
 
 		// Language
 		$this->data = array_merge($this->data, $this->language->load('module/vqmod_manager'));
+
+		// Check that VQMod is properly installed in store
+		if ($this->vqmod_installation_check()) {
+			$this->data['vqmod_is_installed'] = true;
+		} else {
+			$this->data['vqmod_is_installed'] = false;
+		}
+
+		// VQMod installation errors
+		if (isset($this->session->data['vqmod_installation_error'])) {
+			$this->data['vqmod_installation_error'] = $this->session->data['vqmod_installation_error'];
+
+			unset($this->session->data['vqmod_installation_error']);
+		} else {
+			$this->data['vqmod_installation_error'] = '';
+		}
 
 		// Warning
 		if (isset($this->session->data['error'])) {
@@ -95,20 +114,11 @@ class ControllerModuleVQModManager extends Controller {
 		$this->data['download_scripts'] = $this->url->link('module/vqmod_manager/download_vqmod_scripts', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['download_vqcache'] = $this->url->link('module/vqmod_manager/download_vqcache', 'token=' . $this->session->data['token'], 'SSL');
 
-		// Check that VQMod is properly installed in store
-		if ($this->vqmod_installation_check()) {
-			$this->data['vqmod_is_installed'] = true;
+		// Check ZipArchive for downloads
+		if (class_exists('ZipArchive')) {
+			$this->data['ziparchive'] = true;
 		} else {
-			$this->data['vqmod_is_installed'] = false;
-		}
-
-		// VQMod installation errors
-		if (isset($this->session->data['vqmod_installation_error'])) {
-			$this->data['vqmod_installation_error'] = $this->session->data['vqmod_installation_error'];
-
-			unset($this->session->data['vqmod_installation_error']);
-		} else {
-			$this->data['vqmod_installation_error'] = '';
+			$this->data['ziparchive'] = false;
 		}
 
 		// Detect scripts
@@ -246,6 +256,21 @@ class ControllerModuleVQModManager extends Controller {
 						'value'   => sprintf($this->language->get('text_cachetime'), $value)
 					);
 				}
+
+				if ($setting == 'protectedFilelist' && is_file($this->base_dir . $value)) {
+					$protected_files = file_get_contents($this->base_dir . $value);
+
+					if (!empty($protected_files)) {
+						$protected_files = preg_replace('~\r?\n~', "\n", $protected_files);
+
+						$paths = explode("\n", $protected_files);
+
+						$this->data['vqmod_vars'][] = array(
+							'setting' => $this->language->get('setting_protected_files'),
+							'value'   => implode('<br />', $paths)
+						);
+					}
+				}
 			}
 		}
 
@@ -263,11 +288,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function vqmod_install() {
-		$this->language->load('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-		} else {
+		if ($this->userPermission()) {
 			$vqmod_script = $this->request->get['vqmod'];
 
 			if (is_file($this->vqmod_script_dir . $vqmod_script . '.xml_')) {
@@ -285,16 +306,10 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function vqmod_uninstall() {
-		$this->language->load('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-		} else {
+		if ($this->userPermission()) {
 			$vqmod_script = $this->request->get['vqmod'];
 
-			if ($vqmod_script == 'vqmod_opencart') {
-				$this->session->data['error'] = $this->language->get('error_vqmod_opencart');
-			} elseif (is_file($this->vqmod_script_dir . $vqmod_script . '.xml')) {
+			if (is_file($this->vqmod_script_dir . $vqmod_script . '.xml')) {
 				rename($this->vqmod_script_dir . $vqmod_script . '.xml', $this->vqmod_script_dir . $vqmod_script . '.xml_');
 
 				$this->clear_vqcache(true);
@@ -311,9 +326,7 @@ class ControllerModuleVQModManager extends Controller {
 	public function vqmod_upload() {
 		$this->language->load('module/vqmod_manager');
 
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-		} else {
+		if ($this->userPermission()) {
 			$file = $this->request->files['vqmod_file']['tmp_name'];
 			$file_name = $this->request->files['vqmod_file']['name'];
 
@@ -369,21 +382,17 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function vqmod_delete() {
-		$this->language->load('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-		} elseif ($this->request->get['vqmod'] == 'vqmod_opencart.xml') {
-			$this->session->data['error'] = $this->language->get('error_vqmod_opencart');
-		} else {
+		if ($this->userPermission()) {
 			$vqmod_script = $this->request->get['vqmod'];
 
-			if (unlink($this->vqmod_script_dir . $vqmod_script)) {
-				$this->clear_vqcache(true);
+			if (is_file($this->vqmod_script_dir . $vqmod_script)) {
+				if (unlink($this->vqmod_script_dir . $vqmod_script)) {
+					$this->clear_vqcache(true);
 
-				$this->session->data['success'] = $this->language->get('success_delete');
-			} else {
-				$this->session->data['error'] = $this->language->get('error_delete');
+					$this->session->data['success'] = $this->language->get('success_delete');
+				} else {
+					$this->session->data['error'] = $this->language->get('error_delete');
+				}
 			}
 		}
 
@@ -391,11 +400,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function clear_vqcache($return = false) {
-		$this->language->load('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-		} else {
+		if ($this->userPermission()) {
 			$files = glob($this->vqcache_files);
 
 			if ($files) {
@@ -421,11 +426,7 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	public function clear_log() {
-		$this->language->load('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-		} else {
+		if ($this->userPermission()) {
 			if (is_dir($this->vqmod_logs_dir)) {
 				// VQMod 2.2.0 and later
 				$files = glob($this->vqmod_logs);
@@ -449,72 +450,73 @@ class ControllerModuleVQModManager extends Controller {
 	}
 
 	private function list_vqmod_scripts() {
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-		} else {
-			$vqmod_scripts = array();
+		$vqmod_scripts = array();
 
-			$active_vqmod_scripts = glob($this->vqmod_script_dir . '*.xml');
+		if ($this->userPermission('access')) {
+			$enabled_vqmod_scripts = glob($this->vqmod_script_dir . '*.xml');
 			$disabled_vqmod_scripts = glob($this->vqmod_script_dir . '*.xml_');
 
-			if (!empty($active_vqmod_scripts)) {
-				$vqmod_scripts = array_merge($vqmod_scripts, $active_vqmod_scripts);
+			if (!empty($enabled_vqmod_scripts)) {
+				$vqmod_scripts = array_merge($vqmod_scripts, $enabled_vqmod_scripts);
 			}
 
 			if (!empty($disabled_vqmod_scripts)) {
 				$vqmod_scripts = array_merge($vqmod_scripts, $disabled_vqmod_scripts);
 			}
-
-			return $vqmod_scripts;
 		}
+
+		return $vqmod_scripts;
 	}
 
 	public function download_vqmod_scripts() {
-		$this->language->load('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
+		if ($this->userPermission()) {
 			$targets = $this->list_vqmod_scripts();
 
 			$this->zip_send($targets, 'vqmod_scripts_backup');
+		} else {
+			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 	}
 
 	public function download_vqcache() {
-		$this->language->load('module/vqmod_manager');
-
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
+		if ($this->userPermission()) {
 			$targets = glob($this->vqcache_files);
 
+			if (is_file($this->vqmod_modcache)) {
+				$targets[] = $this->vqmod_modcache;
+			}
+
 			$this->zip_send($targets, 'vqcache_dump');
+		} else {
+			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 	}
 
 	public function download_log() {
-		$this->language->load('module/vqmod_manager');
+		if ($this->userPermission()) {
+			if (is_dir($this->vqmod_logs_dir) && count(array_diff(scandir($this->vqmod_logs_dir), array('.', '..'))) > 0) {
+				// VQMod 2.2.0 and later
+				$targets = glob($this->vqmod_logs);
 
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
+				$this->zip_send($targets, 'vqmod_logs');
+			} elseif (is_file($this->vqmod_log)) {
+				// VQMod 2.1.7 and earlier
+				$targets = array($this->vqmod_log);
+
+				$this->zip_send($targets, 'vqmod_log');
+			} else {
+				// No log available for download error
+				$this->language->load('module/vqmod_manager');
+				$this->session->data['error'] = $this->language->get('error_log_download');
+
+				$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
+			}
+		} else {
 			$this->redirect($this->url->link('module/vqmod_manager', 'token=' . $this->session->data['token'], 'SSL'));
-		} elseif (is_dir($this->vqmod_logs_dir)) {
-			// VQMod 2.2.0 and later
-			$targets = glob($this->vqmod_logs);
-
-			$this->zip_send($targets, 'vqmod_logs');
-		} elseif (is_file($this->vqmod_log)) {
-			// VQMod 2.1.7 and earlier
-			$targets = array($this->vqmod_log);
-
-			$this->zip_send($targets, 'vqmod_log');
 		}
 	}
 
-	private function zip_send($targets, $filename) {
+	private function zip_send($targets, $filename = 'download') {
 		$temp = tempnam('tmp', 'zip');
 
 		$zip = new ZipArchive();
@@ -532,7 +534,7 @@ class ControllerModuleVQModManager extends Controller {
 		header('Expires: 0');
 		header('Content-Description: File Transfer');
 		header('Content-Type: application/zip');
-		header('Content-Disposition: attachment; filename=' . $filename . '_' . date('Y-m-d') . '.zip');
+		header('Content-Disposition: attachment; filename=' . $filename . '_' . date('Y-m-d_H-i') . '.zip');
 		header('Content-Transfer-Encoding: binary');
 		readfile($temp);
 		unlink($temp);
@@ -571,8 +573,12 @@ class ControllerModuleVQModManager extends Controller {
 
 		// Check that vqmod_opencart.xml exists
 		if (!is_file($this->vqmod_opencart_script)) {
-			$this->session->data['vqmod_installation_error'] = $this->language->get('error_opencart_xml');
-			return false;
+			if (is_file($this->vqmod_opencart_script . '_')) {
+				$this->session->data['error'] = $this->language->get('error_opencart_xml_disabled');
+			} else {
+				$this->session->data['vqmod_installation_error'] = $this->language->get('error_opencart_xml');
+				return false;
+			}
 		}
 
 		// Check that OpenCart 1.5.x is being used - other errors will appear on the page if they're using 1.4.x but at least the user will be told what the issue is
@@ -632,30 +638,23 @@ class ControllerModuleVQModManager extends Controller {
 		);
 
 		foreach ($vqcache_files as $vqcache_file) {
-			if (!file_exists($this->vqcache_dir . $vqcache_file)) {
+			if (!is_file($this->vqcache_dir . $vqcache_file) && !is_file($this->vqmod_opencart_script . '_')) {
 				$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqcache_files_missing');
 				return false;
 			}
 		}
 
-		// Check ZipArchive for VQMod Manager use
-		if (!class_exists('ZipArchive')) {
-			$this->session->data['vqmod_installation_error'] = $this->language->get('error_ziparchive');
-			return false;
-		}
-
 		return true;
 	}
 
-	private function validate() {
-		if (!$this->user->hasPermission('modify', 'module/vqmod_manager')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-		}
+	private function userPermission($permission = 'modify') {
+		$this->language->load('module/vqmod_manager');
 
-		if (!$this->error) {
-			return true;
-		} else {
+		if (!$this->user->hasPermission($permission, 'module/vqmod_manager')) {
+			$this->session->data['error'] = $this->language->get('error_permission');
 			return false;
+		} else {
+			return true;
 		}
 	}
 }
