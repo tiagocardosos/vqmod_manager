@@ -29,6 +29,7 @@ class ControllerModuleVQModManager extends Controller {
 		$this->vqmod_logs = substr_replace(DIR_SYSTEM, '/vqmod/logs/*.log', -8);
 		$this->vqmod_modcache = substr_replace(DIR_SYSTEM, '/vqmod/mods.cache', -8);
 		$this->vqmod_opencart_script = substr_replace(DIR_SYSTEM, '/vqmod/xml/vqmod_opencart.xml', -8);
+		$this->vqmod_path_replaces = substr_replace(DIR_SYSTEM, '/vqmod/pathReplaces.php', -8);
 
 		clearstatcache();
 	}
@@ -40,7 +41,7 @@ class ControllerModuleVQModManager extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->userPermission()) {
+		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			// Upload VQMod
 			if (isset($this->request->post['upload'])) {
 				$this->vqmod_upload();
@@ -272,6 +273,24 @@ class ControllerModuleVQModManager extends Controller {
 					}
 				}
 			}
+		}
+
+		// Path Replacements - VQMod 2.3.0
+		if (is_file($this->vqmod_path_replaces)) {
+			if (!isset($replaces)) {
+				include($this->vqmod_path_replaces);
+			}
+
+			$replacement_values = array();
+
+			foreach ($replaces as $key => $value) {
+				$replacement_values[] = $value[0] . ' &rarr; ' . $value[1];
+			}
+
+			$this->data['vqmod_vars'][] = array(
+				'setting' => $this->language->get('setting_path_replaces'),
+				'value'   => implode('<br />', $replacement_values)
+			);
 		}
 
 		// Stylesheet

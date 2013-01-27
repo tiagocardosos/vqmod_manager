@@ -58,20 +58,20 @@ $_['error_unknown']              = 'Warning: Unknown error!';
 $_['error_write_fail']           = 'Warning: Failed to write VQMod script!';
 
 // VQMod Installation Errors
-$_['error_error_log_write']            = 'Unabled to write to VQMod error log!  Please set &quot;/vqmod&quot; directory permissions to 755 or 777 and try again.';
+$_['error_error_log_write']            = 'Unabled to write to VQMod error log!  Please set "/vqmod" directory permissions to 755 or 777 and try again.';
 $_['error_opencart_version']           = 'OpenCart 1.5.x or later is required to use VQMod Manager!';
-$_['error_opencart_xml']               = '&quot;/vqmod/xml/vqmod_opencart.xml&quot; does not appear to exist!  Please upload the OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
-$_['error_opencart_xml_disabled']      = 'Warning: &quot;vqmod_opencart.xml&quot; is disabled!  VQMod will not function.';
-$_['error_opencart_xml_version']       = 'You appear to be using a version of &quot;vqmod_opencart.xml&quot; that is out-of-date for your store!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
-$_['error_vqcache_dir']                = '&quot;/vqmod/vqcache&quot; directory does not appear to exist!';
-$_['error_vqcache_write']              = 'Unabled to write to &quot;/vqmod/vqcache&quot; directory!  Set permissions to 755 or 777 and try again.';
+$_['error_opencart_xml']               = '"/vqmod/xml/vqmod_opencart.xml" does not appear to exist!  Please upload the OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_opencart_xml_disabled']      = 'Warning: "vqmod_opencart.xml" is disabled!  VQMod will not function.';
+$_['error_opencart_xml_version']       = 'You appear to be using a version of "vqmod_opencart.xml" that is out-of-date for your store!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_vqcache_dir']                = '"/vqmod/vqcache" directory does not appear to exist!';
+$_['error_vqcache_write']              = 'Unabled to write to "/vqmod/vqcache" directory!  Set permissions to 755 or 777 and try again.';
 $_['error_vqcache_files_missing']      = 'VQMod does not appear to be properly generating vqcache files!';
-$_['error_vqmod_core']                 = 'Required file &quot;vqmod.php&quot; is missing!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
-$_['error_vqmod_dir']                  = 'The &quot;/vqmod&quot; directory does not appear to exist!';
+$_['error_vqmod_core']                 = 'Required file "vqmod.php" is missing!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_vqmod_dir']                  = 'The "/vqmod" directory does not appear to exist!';
 $_['error_vqmod_install_link']         = 'VQMod does not appear to have been integrated with OpenCart!  You can run the VQMod installer at <a href="%1$s">%1$s</a>.';
 $_['error_vqmod_opencart_integration'] = 'VQMod does not appear to have been integrated with OpenCart!  Please upload the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
-$_['error_vqmod_script_dir']           = '&quot;/vqmod/xml&quot; directory does not appear to exist!';
-$_['error_vqmod_script_write']         = 'Unable to write to &quot;/vqmod/xml&quot; directory!  Set permissions to 755 or 777 and try again.';
+$_['error_vqmod_script_dir']           = '"/vqmod/xml" directory does not appear to exist!';
+$_['error_vqmod_script_write']         = 'Unable to write to "/vqmod/xml" directory!  Set permissions to 755 or 777 and try again.';
 
 // VQMod Manager Dependency Errors
 $_['error_simplexml']       = '<a href="http://php.net/manual/en/book.simplexml.php" target="_blank">SimpleXML</a> must be installed for VQMod Manager to work properly!  Contact your host for more info.';
@@ -86,6 +86,7 @@ $_['setting_cachetime']       = 'cacheTime:<br /><span class="help">Depricated a
 $_['setting_logfolder']       = 'Log Folder:<br /><span class="help">VQMod 2.2.0 and later</span>';
 $_['setting_logging']         = 'Error Logging:';
 $_['setting_modcache']        = 'modCache:';
+$_['setting_path_replaces']   = 'Path Replacements:<br /><span class="help">Changes do not go into effect until the mods.cache file is deleted.</span>';
 $_['setting_protected_files'] = 'Protected Files:';
 $_['setting_usecache']        = 'useCache:<br /><span class="help">Depricated as of VQMod 2.1.7</span>';
 
@@ -118,7 +119,7 @@ $_['text_unavailable']      = '&mdash;';
 $_['text_uninstall']        = 'Uninstall';
 $_['text_upload']           = 'Upload';
 $_['text_usecache_help']    = 'useCache is depricated as of VQMod 2.1.7'; // @TODO
-$_['text_vqcache_help']     = 'Some system files will always be present even after clearing the cache.';
+$_['text_vqcache_help']     = 'Clears contents of the vqcache directory and deletes mods.cache file.  Some system files will always be present even after clearing the cache.';
 
 // Version
 $_['vqmod_manager_author']  = 'rph';
