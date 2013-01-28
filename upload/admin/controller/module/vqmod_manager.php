@@ -277,20 +277,22 @@ class ControllerModuleVQModManager extends Controller {
 
 		// Path Replacements - VQMod 2.3.0
 		if (is_file($this->vqmod_path_replaces)) {
-			if (!isset($replaces)) {
-				include($this->vqmod_path_replaces);
+			if (!in_array('pathReplaces.php', get_included_files())) {
+				include_once($this->vqmod_path_replaces);
 			}
 
-			$replacement_values = array();
+			if (!empty($replaces)) {
+				$replacement_values = array();
 
-			foreach ($replaces as $key => $value) {
-				$replacement_values[] = $value[0] . ' &rarr; ' . $value[1];
+				foreach ($replaces as $key => $value) {
+					$replacement_values[] = $value[0] . ' &rarr; ' . $value[1];
+				}
+
+				$this->data['vqmod_vars'][] = array(
+					'setting' => $this->language->get('setting_path_replaces'),
+					'value'   => implode('<br />', $replacement_values)
+				);
 			}
-
-			$this->data['vqmod_vars'][] = array(
-				'setting' => $this->language->get('setting_path_replaces'),
-				'value'   => implode('<br />', $replacement_values)
-			);
 		}
 
 		// Stylesheet
@@ -657,6 +659,7 @@ class ControllerModuleVQModManager extends Controller {
 		);
 
 		foreach ($vqcache_files as $vqcache_file) {
+			// Only return false if vqmod_opencart.xml_ isn't present (in case the user has disabled it) so they aren't locked out of VQMM
 			if (!is_file($this->vqcache_dir . $vqcache_file) && !is_file($this->vqmod_opencart_script . '_')) {
 				$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqcache_files_missing');
 				return false;
