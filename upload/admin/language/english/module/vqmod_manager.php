@@ -114,6 +114,7 @@ $_['text_enabled']          = 'Enabled';
 $_['text_install']          = 'Install';
 $_['text_module']           = 'Module';
 $_['text_no_results']       = 'No VQMod scripts were found!';
+$_['text_seperator']        = ' &rarr; ';
 $_['text_success']          = 'Success: You have modified module VQMod Manager!';
 $_['text_unavailable']      = '&mdash;';
 $_['text_uninstall']        = 'Uninstall';
@@ -124,7 +125,7 @@ $_['text_vqcache_help']     = 'Clears contents of the vqcache directory and dele
 // Version
 $_['vqmod_manager_author']  = 'rph';
 $_['vqmod_manager_license'] = 'Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)';
-$_['vqmod_manager_version'] = '2.0-beta.8';
+$_['vqmod_manager_version'] = '2.0-beta.9';
 
 // Javascript Warnings
 $_['warning_required_delete']    = 'WARNING: Deleting \\\'vqmod_opencart.xml\\\' will cause VQMod to STOP WORKING!  Continue?';

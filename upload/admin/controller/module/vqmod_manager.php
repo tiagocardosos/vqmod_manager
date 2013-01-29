@@ -285,7 +285,7 @@ class ControllerModuleVQModManager extends Controller {
 				$replacement_values = array();
 
 				foreach ($replaces as $key => $value) {
-					$replacement_values[] = $value[0] . ' &rarr; ' . $value[1];
+					$replacement_values[] = $value[0] . $this->language->get('text_seperator') . $value[1];
 				}
 
 				$this->data['vqmod_vars'][] = array(
@@ -614,7 +614,8 @@ class ControllerModuleVQModManager extends Controller {
 			$xml = simplexml_load_file($this->vqmod_opencart_script);
 			libxml_clear_errors();
 
-			if (isset($xml->vqmver) && version_compare($xml->vqmver, '2.1.7', '<')) {
+			// In VQMod 2.3.0 'vqmver' is set as '2.X'
+			if ((isset($xml->vqmver)) && (strtolower($xml->vqmver) != '2.x') && (version_compare($xml->vqmver, '2.1.7', '<'))) {
 				$this->session->data['vqmod_installation_error'] = $this->language->get('error_opencart_xml_version');
 				return false;
 			}
