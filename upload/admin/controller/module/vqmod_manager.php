@@ -237,6 +237,7 @@ class ControllerModuleVQModManager extends Controller {
 
 		if ($vqmod_vars) {
 			foreach ($vqmod_vars as $setting => $value) {
+				// Deprecated VQMod 2.1.7
 				if ($setting == 'useCache') {
 					$this->data['vqmod_vars'][] = array(
 						'setting' => $this->language->get('setting_usecache'),
@@ -251,6 +252,7 @@ class ControllerModuleVQModManager extends Controller {
 					);
 				}
 
+				// Deprecated VQMod 2.2.0
 				if ($setting == 'cacheTime') {
 					$this->data['vqmod_vars'][] = array(
 						'setting' => $this->language->get('setting_cachetime'),
@@ -271,6 +273,13 @@ class ControllerModuleVQModManager extends Controller {
 							'value'   => implode('<br />', $paths)
 						);
 					}
+				}
+
+				if ($setting == 'directorySeparator' && !empty($value)) {
+					$this->data['vqmod_vars'][] = array(
+						'setting' => $this->language->get('setting_dir_separator'),
+						'value'   => htmlentities($value, ENT_QUOTES, 'UTF-8')
+					);
 				}
 			}
 		}

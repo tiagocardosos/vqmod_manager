@@ -83,6 +83,7 @@ $_['error_mod_skipped']     = 'Operation Skipped';
 
 // VQMod Variable Settings
 $_['setting_cachetime']       = 'cacheTime:<br /><span class="help">Depricated as of VQMod 2.2.0</span>';
+$_['setting_dir_separator']   = 'Directory Separator:';
 $_['setting_logfolder']       = 'Log Folder:<br /><span class="help">VQMod 2.2.0 and later</span>';
 $_['setting_logging']         = 'Error Logging:';
 $_['setting_modcache']        = 'modCache:';
