@@ -58,13 +58,13 @@ $_['error_unknown']              = 'Warning: Unknown error!';
 $_['error_write_fail']           = 'Warning: Failed to write VQMod script!';
 
 // VQMod Installation Errors
-$_['error_error_log_write']            = 'Unabled to write to VQMod error log!  Please set "/vqmod" directory permissions to 755 or 777 and try again.';
+$_['error_error_log_write']            = 'Unable to write to VQMod error log!  Please set "/vqmod" directory permissions to 755 or 777 and try again.';
 $_['error_opencart_version']           = 'OpenCart 1.5.x or later is required to use VQMod Manager!';
 $_['error_opencart_xml']               = '"/vqmod/xml/vqmod_opencart.xml" does not appear to exist!  Please upload the OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_opencart_xml_disabled']      = 'Warning: "vqmod_opencart.xml" is disabled!  VQMod will not function.';
 $_['error_opencart_xml_version']       = 'You appear to be using a version of "vqmod_opencart.xml" that is out-of-date for your store!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqcache_dir']                = '"/vqmod/vqcache" directory does not appear to exist!';
-$_['error_vqcache_write']              = 'Unabled to write to "/vqmod/vqcache" directory!  Set permissions to 755 or 777 and try again.';
+$_['error_vqcache_write']              = 'Unable to write to "/vqmod/vqcache" directory!  Set permissions to 755 or 777 and try again.';
 $_['error_vqcache_files_missing']      = 'VQMod does not appear to be properly generating vqcache files!';
 $_['error_vqmod_core']                 = 'Required file "vqmod.php" is missing!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqmod_dir']                  = 'The "/vqmod" directory does not appear to exist!';
@@ -82,14 +82,14 @@ $_['error_mod_aborted']     = 'Mod Aborted';
 $_['error_mod_skipped']     = 'Operation Skipped';
 
 // VQMod Variable Settings
-$_['setting_cachetime']       = 'cacheTime:<br /><span class="help">Depricated as of VQMod 2.2.0</span>';
+$_['setting_cachetime']       = 'cacheTime:<br /><span class="help">Deprecated as of VQMod 2.2.0</span>';
 $_['setting_dir_separator']   = 'Directory Separator:';
 $_['setting_logfolder']       = 'Log Folder:<br /><span class="help">VQMod 2.2.0 and later</span>';
 $_['setting_logging']         = 'Error Logging:';
 $_['setting_modcache']        = 'modCache:';
 $_['setting_path_replaces']   = 'Path Replacements:<br /><span class="help">Changes do not go into effect until the mods.cache file is deleted.</span>';
 $_['setting_protected_files'] = 'Protected Files:';
-$_['setting_usecache']        = 'useCache:<br /><span class="help">Depricated as of VQMod 2.1.7</span>';
+$_['setting_usecache']        = 'useCache:<br /><span class="help">Deprecated as of VQMod 2.1.7</span>';
 
 // Success
 $_['success_clear_vqcache'] = 'Success: VQMod cache cleared!';
@@ -115,18 +115,18 @@ $_['text_enabled']          = 'Enabled';
 $_['text_install']          = 'Install';
 $_['text_module']           = 'Module';
 $_['text_no_results']       = 'No VQMod scripts were found!';
-$_['text_seperator']        = ' &rarr; ';
+$_['text_separator']        = ' &rarr; ';
 $_['text_success']          = 'Success: You have modified module VQMod Manager!';
 $_['text_unavailable']      = '&mdash;';
 $_['text_uninstall']        = 'Uninstall';
 $_['text_upload']           = 'Upload';
-$_['text_usecache_help']    = 'useCache is depricated as of VQMod 2.1.7'; // @TODO
+$_['text_usecache_help']    = 'useCache is deprecated as of VQMod 2.1.7'; // @TODO
 $_['text_vqcache_help']     = 'Clears contents of the vqcache directory and deletes mods.cache file.  Some system files will always be present even after clearing the cache.';
 
 // Version
 $_['vqmod_manager_author']  = 'rph';
 $_['vqmod_manager_license'] = 'Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)';
-$_['vqmod_manager_version'] = '2.0-beta.9';
+$_['vqmod_manager_version'] = '2.0-beta.10';
 
 // Javascript Warnings
 $_['warning_required_delete']    = 'WARNING: Deleting \\\'vqmod_opencart.xml\\\' will cause VQMod to STOP WORKING!  Continue?';
