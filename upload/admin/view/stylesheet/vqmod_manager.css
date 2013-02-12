@@ -47,6 +47,10 @@ a.action-link:hover {
 	font-family: Verdana, Geneva, sans-serif;
 	display: block;
 }
+.error-install {
+	font-family: "Courrier New", "Lucida Console", monospace;
+	font-weight: bold;
+}
 .highlight {
 	color: #ff0000;
 }

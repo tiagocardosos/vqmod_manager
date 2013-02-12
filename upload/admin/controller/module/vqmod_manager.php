@@ -639,7 +639,7 @@ class ControllerModuleVQModManager extends Controller {
 		}
 
 		// Check VQMod Error Log Writing
-		if (!is_writable($this->vqmod_dir)) {
+		if ((is_dir($this->vqmod_logs_dir) && !is_writable($this->vqmod_logs_dir)) || (!is_writable($this->vqmod_dir))) {
 			$this->session->data['vqmod_installation_error'] = $this->language->get('error_error_log_write');
 			return false;
 		}

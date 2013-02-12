@@ -58,20 +58,21 @@ $_['error_unknown']              = 'Warning: Unknown error!';
 $_['error_write_fail']           = 'Warning: Failed to write VQMod script!';
 
 // VQMod Installation Errors
-$_['error_error_log_write']            = 'Unable to write to VQMod error log!  Please set "/vqmod" directory permissions to 755 or 777 and try again.';
+$_['error_error_log_write']            = 'Unable to write to VQMod error log!  Please set "<span class="error-install">/vqmod</span>" directory permissions to 755 or 777 and try again.';
+$_['error_error_logs_write']           = 'Unable to write to VQMod error log!  Please set "<span class="error-install">/vqmod/logs</span>" directory permissions to 755 or 777 and try again.';
 $_['error_opencart_version']           = 'OpenCart 1.5.x or later is required to use VQMod Manager!';
-$_['error_opencart_xml']               = '"/vqmod/xml/vqmod_opencart.xml" does not appear to exist!  Please upload the OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
-$_['error_opencart_xml_disabled']      = 'Warning: "vqmod_opencart.xml" is disabled!  VQMod will not function.';
-$_['error_opencart_xml_version']       = 'You appear to be using a version of "vqmod_opencart.xml" that is out-of-date for your store!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
-$_['error_vqcache_dir']                = '"/vqmod/vqcache" directory does not appear to exist!';
-$_['error_vqcache_write']              = 'Unable to write to "/vqmod/vqcache" directory!  Set permissions to 755 or 777 and try again.';
+$_['error_opencart_xml']               = 'Required file "<span class="error-install">/vqmod/xml/vqmod_opencart.xml</span>" does not appear to exist!  Please install the latest OpenCart-compatible version of VQMod from <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_opencart_xml_disabled']      = 'Warning: "<span class="error-install">vqmod_opencart.xml</span>" is disabled!  VQMod scripts will not function!';
+$_['error_opencart_xml_version']       = 'You appear to be using a version of "<span class="error-install">vqmod_opencart.xml</span>" that is out-of-date for your OpenCart version!  Please install the latest OpenCart-compatible version of VQMod from <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_vqcache_dir']                = 'Required directory "<span class="error-install">/vqmod/vqcache</span>" does not appear to exist!  Please install the latest OpenCart-compatible version of VQMod from <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_vqcache_write']              = 'Unable to write to "<span class="error-install">/vqmod/vqcache</span>" directory!  Set permissions to 755 or 777 and try again.';
 $_['error_vqcache_files_missing']      = 'VQMod does not appear to be properly generating vqcache files!';
-$_['error_vqmod_core']                 = 'Required file "vqmod.php" is missing!  Please install the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
-$_['error_vqmod_dir']                  = 'The "/vqmod" directory does not appear to exist!';
-$_['error_vqmod_install_link']         = 'VQMod does not appear to have been integrated with OpenCart!  You can run the VQMod installer at <a href="%1$s">%1$s</a>.';
-$_['error_vqmod_opencart_integration'] = 'VQMod does not appear to have been integrated with OpenCart!  Please upload the latest OpenCart version of VQMod from <a href="http://code.google.com/p/vqmod/">http://code.google.com/p/vqmod/</a> and try again.';
-$_['error_vqmod_script_dir']           = '"/vqmod/xml" directory does not appear to exist!';
-$_['error_vqmod_script_write']         = 'Unable to write to "/vqmod/xml" directory!  Set permissions to 755 or 777 and try again.';
+$_['error_vqmod_core']                 = 'Required file "<span class="error-install">vqmod.php</span>" is missing!  Please install the latest OpenCart-compatible version of VQMod from <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_vqmod_dir']                  = 'The "<span class="error-install">/vqmod</span>" directory does not appear to exist!';
+$_['error_vqmod_install_link']         = 'VQMod does not appear to have been integrated with OpenCart!  Please run the VQMod installer at <a href="%1$s">%1$s</a>.';
+$_['error_vqmod_opencart_integration'] = 'VQMod does not appear to have been integrated with OpenCart!  Please install the latest OpenCart-compatible version of VQMod from <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_vqmod_script_dir']           = 'Required directory "<span class="error-install">/vqmod/xml</span>" does not appear to exist!  Please install the latest OpenCart-compatible version of VQMod from <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a> and try again.';
+$_['error_vqmod_script_write']         = 'Unable to write to "<span class="error-install">/vqmod/xml</span>" directory!  Please set directory permissions to 755 or 777 and try again.';
 
 // VQMod Manager Dependency Errors
 $_['error_simplexml']       = '<a href="http://php.net/manual/en/book.simplexml.php" target="_blank">SimpleXML</a> must be installed for VQMod Manager to work properly!  Contact your host for more info.';
