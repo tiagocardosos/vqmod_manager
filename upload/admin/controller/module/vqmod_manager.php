@@ -631,7 +631,7 @@ class ControllerModuleVQModManager extends Controller {
 		// Check if VQMod class is added to OpenCart
 		if (!class_exists('VQMod')) {
 			if (is_file($this->vqmod_dir . 'install/index.php') && is_file($this->vqmod_dir . 'install/ugrsr.class.php')) {
-				$this->session->data['vqmod_installation_error'] = sprintf(HTTP_CATALOG . 'vqmod/install', $this->language->get('error_vqmod_install_link'));
+				$this->session->data['vqmod_installation_error'] = sprintf($this->language->get('error_vqmod_install_link'), HTTP_CATALOG . 'vqmod/install');
 			} else {
 				$this->session->data['vqmod_installation_error'] = $this->language->get('error_vqmod_opencart_integration');
 			}

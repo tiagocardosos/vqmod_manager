@@ -69,14 +69,14 @@ $_['error_vqcache_write']              = 'Unable to write to "<span class="error
 $_['error_vqcache_files_missing']      = 'VQMod does not appear to be properly generating vqcache files!';
 $_['error_vqmod_core']                 = 'Required file "<span class="error-install">vqmod.php</span>" is missing!  Please install the latest OpenCart-compatible version of VQMod from <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqmod_dir']                  = 'The "<span class="error-install">/vqmod</span>" directory does not appear to exist!';
-$_['error_vqmod_install_link']         = 'VQMod does not appear to have been integrated with OpenCart!  Please run the VQMod installer at <a href="%1$s">%1$s</a>.';
+$_['error_vqmod_install_link']         = 'VQMod does not appear to have been integrated with OpenCart!  Please run the VQMod installer at <a href="%1$s">%1$s</a>.  If you have previously run the installer ensure that you are using the latest version of VQMod found at <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a>.';
 $_['error_vqmod_opencart_integration'] = 'VQMod does not appear to have been integrated with OpenCart!  Please install the latest OpenCart-compatible version of VQMod from <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqmod_script_dir']           = 'Required directory "<span class="error-install">/vqmod/xml</span>" does not appear to exist!  Please install the latest OpenCart-compatible version of VQMod from <a href="http://code.google.com/p/vqmod/" target="_blank">http://code.google.com/p/vqmod/</a> and try again.';
 $_['error_vqmod_script_write']         = 'Unable to write to "<span class="error-install">/vqmod/xml</span>" directory!  Please set directory permissions to 755 or 777 and try again.';
 
 // VQMod Manager Dependency Errors
 $_['error_simplexml']       = '<a href="http://php.net/manual/en/book.simplexml.php" target="_blank">SimpleXML</a> must be installed for VQMod Manager to work properly!  Contact your host for more info.';
-$_['error_ziparchive']      = '<a href="http://php.net/manual/en/class.ziparchive.php" target="_blank">ZipArchive</a> must be installed to download files!  Contact your host for more info.';
+$_['error_ziparchive']      = '<a href="http://php.net/manual/en/class.ziparchive.php" target="_blank">ZipArchive</a> must be installed to download VQMod script files!  Contact your host for more info.';
 
 // VQMod Log Errors
 $_['error_mod_aborted']     = 'Mod Aborted';
@@ -127,7 +127,7 @@ $_['text_vqcache_help']     = 'Clears contents of the vqcache directory and dele
 // Version
 $_['vqmod_manager_author']  = 'rph';
 $_['vqmod_manager_license'] = 'Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)';
-$_['vqmod_manager_version'] = '2.0-beta.10';
+$_['vqmod_manager_version'] = '2.0-beta.11';
 
 // Javascript Warnings
 $_['warning_required_delete']    = 'WARNING: Deleting \\\'vqmod_opencart.xml\\\' will cause VQMod to STOP WORKING!  Continue?';
